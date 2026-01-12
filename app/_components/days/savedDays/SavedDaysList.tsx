@@ -84,7 +84,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
 
     return (
         <div className="flex flex-col gap-3">
-            {days.map((day: LoadedDataType, i: number) => (
+            {days?.map((day: LoadedDataType, i: number) => (
                 <Day key={i}>
                     <DayHeader day={day} />
                     <TileList
