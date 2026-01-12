@@ -8,7 +8,7 @@ async function SavedDaysListServerComponent() {
     if (!dbData)
         return (
             <div className="flex items-center justify-center">
-                Ni shranjenih dni.
+                Ni shranjenih dni SC.
             </div>
         );
     

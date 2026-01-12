@@ -67,9 +67,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     //     dispatch(saveLastDay(days.at(-1)))
     // }, [dispatch, days, isLoading])
 
-    // useEffect(function() {
-    //     if(dbData) setDays(JSON.parse(dbData))
-    // }, [setDays, dbData])
+    
 
     useEffect(function() {
         if(!dbData) return;
