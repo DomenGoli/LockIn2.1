@@ -82,7 +82,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     if (!dbData || days?.length === 0)
         return (
             <div className="flex items-center justify-center">
-                Ni shranjenih dni.
+                Ni shranjenih dni. CC
             </div>
         );
 
