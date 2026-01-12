@@ -8,7 +8,7 @@ type InitialStateType = {
 };
 
 type DayObjectType = {
-    date: Date | null;
+    date: Date | string;
     actsArray: ActivityType[];
     id: string;
     note: string;
@@ -44,7 +44,7 @@ const initialState: InitialStateType = {
     betterScore: loadLocalStoredData(),
     deltaScore: 0,
     lastDay: {
-        date: null,
+        date: "1970, 1, 1",
         actsArray: [],
         id: "",
         note: "",
