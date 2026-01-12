@@ -1,13 +1,14 @@
 // "use client";
 import { Toaster } from "react-hot-toast";
-import CurrentDay from "@/app/_components/days/currentDay/CurrentDay";
-import StoreProvider from "./StoreProvider";
-import Sidebar from "@/app/_ui/Sidebar";
+import CurrentDay from "../_components/days/currentDay/CurrentDay";
+import SavedDaysList from "../_components/days/savedDays/SavedDaysList";
+import StoreProvider from "../StoreProvider";
+import Sidebar from "./Sidebar";
 import { Suspense } from "react";
-import Spinner from "@/app/_ui/Spinner";
-import SavedDaysListServerComponent from "@/app/_components/days/savedDays/SavedDaysListServerComponent";
+import Spinner from "./Spinner";
+import SavedDaysListServerComponent from "../_components/days/savedDays/SavedDaysListServerComponent";
 
-function Page() {
+function LockinApp() {
     return (
         <div className="flex justify-center">
             <div className="grid grid-cols-[auto_22rem]">
@@ -33,9 +34,10 @@ function Page() {
                 />
                 <StoreProvider>
                 <div>
-                    <div className="grid h-screen grid-rows-[1fr_auto] p-5 gap-4">
+                    <div className="grid h-screen grid-rows-[1fr_auto] p-5 gap-7">
                         <Suspense fallback={<Spinner />}>
                             <SavedDaysListServerComponent />
+
                         </Suspense>
                             <CurrentDay />
                         
@@ -51,4 +53,4 @@ function Page() {
     );
 }
 
-export default Page;
+export default LockinApp;
