@@ -68,7 +68,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     useEffect(function() {
         if(!dbData) return;
         if(dbData && days?.length === 0) return;
-        dispatch(saveLastDay(days.at(-1)))
+        if(days.length > 0) dispatch(saveLastDay(days.at(-1)))
     }, [dbData, days, dispatch])
 
 
@@ -78,7 +78,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     if (dbData && days?.length)
         return (
             <div className="flex items-center justify-center">
-                Lista dni je prazna!
+                Ni shranjenih dni.
             </div>
         );
 

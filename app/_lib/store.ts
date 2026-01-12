@@ -9,6 +9,16 @@ const store = configureStore({
         diary: diaryReducer,
         better: betterReducer, 
     },
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+            "saveLastDay", "updateBetterScore", "updateBetterScore", "dispatch"
+          // the action with non-serializable payload
+          // e.g. "actionWithFilePayload"
+        ],
+      },
+    }),
 });
 
 export default store;

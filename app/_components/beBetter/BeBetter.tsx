@@ -75,7 +75,7 @@ function BeBetter() {
             if (missedDaysScore)
                 dispatch(saveLastDateReference(todayRef.current));
 
-            console.log(missedDaysScore);
+            // console.log(missedDaysScore);
             dispatch(updateBetterScore(missedDaysScore));
         },
         [dispatch, calculateMissedDaysScore]

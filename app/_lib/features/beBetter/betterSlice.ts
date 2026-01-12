@@ -42,7 +42,7 @@ function loadLocalStoredData() {
 function loadDateReference() {
     if(typeof window !== "undefined") {
 
-        const storedDateReference = localStorage.getItem("lastDayChecked")
+        const storedDateReference = localStorage?.getItem("lastDayChecked")
         return storedDateReference ? JSON.parse(storedDateReference) : "1970, 1, 1"
     }
     else return "1970, 1, 1"
