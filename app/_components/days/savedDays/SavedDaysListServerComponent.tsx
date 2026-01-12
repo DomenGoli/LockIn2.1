@@ -14,7 +14,7 @@ async function SavedDaysListServerComponent() {
     
     return (
         <div className="overflow-scroll no-scrollbar">
-            {dbData && <SavedDaysList dbData={JSON.stringify(dbData)}/>}
+            <SavedDaysList dbData={JSON.stringify(dbData)}/>
 
         </div>
     )

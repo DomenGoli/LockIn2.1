@@ -1,6 +1,6 @@
 "use client"
 // import { useLoaderData } from "react-router";
-import Day from "./SavedDay";
+import SavedDay from "./SavedDay";
 // import { getDaysApi } from "../../../service/apiDays";
 import { useEffect, useRef, useState } from "react";
 import DayHeader from "./SavedDayHeader";
@@ -81,7 +81,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     // if(error) return (<p>{error.message}</p>)
 
 
-    if (!dbData || days?.length)
+    if (!dbData || days?.length === 0)
         return (
             <div className="flex items-center justify-center">
                 Ni shranjenih dni.
@@ -91,7 +91,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     return (
         <div className="flex flex-col gap-3">
             {days?.map((day: LoadedDataType, i: number) => (
-                <Day key={i}>
+                <SavedDay key={i}>
                     <DayHeader day={day} />
                     <TileList
                         actsArray={day.actsArray.filter((act: LoadedDataType) =>
@@ -99,7 +99,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
                         )}
                         tileMode="display"
                     />
-                </Day>
+                </SavedDay>
             ))}
             <div ref={daysEndRef} />
         </div>
