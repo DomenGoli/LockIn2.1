@@ -2,7 +2,7 @@
 // import { useLoaderData } from "react-router";
 import Day from "./SavedDay";
 // import { getDaysApi } from "../../../service/apiDays";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import DayHeader from "./SavedDayHeader";
 import TileList from "../TileList";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
@@ -30,7 +30,9 @@ type LoadedDataType = {
 };
 
 function SavedDaysList({ dbData }: {dbData: string}) {
-    const days = JSON.parse(dbData);
+    // const [days, setDays] = useState()
+    // const days = dbData ? JSON.parse(dbData) : [];
+    const days = JSON.parse(dbData)
 
     // const {
     //     isLoading,
@@ -64,6 +66,10 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     //     // console.log(days.at(-1));
     //     dispatch(saveLastDay(days.at(-1)))
     // }, [dispatch, days, isLoading])
+
+    // useEffect(function() {
+    //     if(dbData) setDays(JSON.parse(dbData))
+    // }, [setDays, dbData])
 
     useEffect(function() {
         if(!dbData) return;
