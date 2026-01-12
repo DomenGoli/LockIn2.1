@@ -75,7 +75,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     // if(error) return (<p>{error.message}</p>)
 
 
-    if (dbData && days?.length)
+    if (!dbData || days?.length)
         return (
             <div className="flex items-center justify-center">
                 Ni shranjenih dni.
