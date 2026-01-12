@@ -6,7 +6,8 @@
     "dev": "next dev --port 8000",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prod": "next build && next start --port 8000"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",

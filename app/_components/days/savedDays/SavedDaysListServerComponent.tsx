@@ -5,11 +5,16 @@ async function SavedDaysListServerComponent() {
     const dbData = await getSavedDaysData()
         console.log(dbData)
     
+    // if (!dbData)
+    //     return (
+    //         <div className="flex items-center justify-center">
+    //             Ni shranjenih dni SC.
+    //         </div>
+    //     );
+
     if (!dbData)
         return (
-            <div className="flex items-center justify-center">
-                Ni shranjenih dni SC.
-            </div>
+            null
         );
     
     return (
