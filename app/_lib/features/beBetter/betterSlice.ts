@@ -1,3 +1,5 @@
+"use client"
+
 import { createSlice } from "@reduxjs/toolkit";
 //Types
 type InitialStateType = {
@@ -30,12 +32,20 @@ type ActivityType = {
 
 //// Loada data iz local storage
 function loadLocalStoredData() {
-    const storedScoreValue = localStorage.getItem("betterScore");
-    return storedScoreValue ? JSON.parse(storedScoreValue) : 10;
+    if(typeof window !== "undefined") {
+
+        const storedScoreValue = localStorage.getItem("betterScore");
+        return storedScoreValue ? JSON.parse(storedScoreValue) : 10;
+    }
+    else return 10
 }
 function loadDateReference() {
-    const storedDateReference = localStorage.getItem("lastDayChecked")
-    return storedDateReference ? JSON.parse(storedDateReference) : "1970, 1, 1"
+    if(typeof window !== "undefined") {
+
+        const storedDateReference = localStorage.getItem("lastDayChecked")
+        return storedDateReference ? JSON.parse(storedDateReference) : "1970, 1, 1"
+    }
+    else return "1970, 1, 1"
 }
 
 

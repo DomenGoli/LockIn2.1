@@ -1,3 +1,4 @@
+"use client"
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 // import { deleteDayApi } from "../../../service/apiDays";
@@ -57,13 +58,17 @@ const dayObjectSlice = createSlice({
     reducers: {
         addActivity(state, action) {
             state.actsArray.push(action.payload);
-            localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            if(typeof window !== "undefined") {
+                localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            }
         },
         deleteActivity(state, action) {
             state.actsArray = state.actsArray.filter(
                 (activity) => activity.id !== action.payload
             );
-            localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            if(typeof window !== "undefined") {
+                localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            }
         },
         updateActivity(state, action) {
             state.actsArray.map(act => {
@@ -76,7 +81,9 @@ const dayObjectSlice = createSlice({
                     act.betterPriority = action.payload.betterPriority
                 }
             });
-            localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            if(typeof window !== "undefined") {
+                localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            }
         },
 
         saveInputLocalStorage: {
@@ -91,7 +98,9 @@ const dayObjectSlice = createSlice({
                         activity.actState = action.payload.actState;
                     }
                 });
-                localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+                if(typeof window !== "undefined") {
+                    localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            }
             },
         },
         saveDay(state) {
@@ -101,18 +110,24 @@ const dayObjectSlice = createSlice({
             });
             state.note = ""
             state.plan = ""
-            localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            if(typeof window !== "undefined") {
+                localStorage.setItem("currentDayObject", JSON.stringify({ ...state }));
+            }
         },
         deleteDay(state) {
             return state;
         },
         saveNoteToLocalStorage(state, action){
             state.note = action.payload
-            localStorage.setItem("currentDayObject", JSON.stringify({...state}))
+            if(typeof window !== "undefined") {
+                localStorage.setItem("currentDayObject", JSON.stringify({...state}))
+            }
         },
         savePlanToLocalStorage(state, action) {
             state.plan = action.payload
-            localStorage.setItem("currentDayObject", JSON.stringify({...state}))
+            if(typeof window !== "undefined") {
+                localStorage.setItem("currentDayObject", JSON.stringify({...state}))
+            }
         }
     },
 });
@@ -122,5 +137,4 @@ const dayObjectSlice = createSlice({
 export default dayObjectSlice.reducer;
 export const {saveDay, addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage } =
     dayObjectSlice.actions;
-
 
