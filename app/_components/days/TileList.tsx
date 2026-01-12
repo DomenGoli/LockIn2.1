@@ -28,7 +28,7 @@ function TileList({
 
     // Ni aktivnosti
 
-    if (tileMode === "input" && actsArray.length === 0)
+    if (tileMode === "input" && actsArray?.length === 0)
         return (
             <div className="flex gap-4">
                 <p>Zacni z dodajanjem aktivnosti.</p>
