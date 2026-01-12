@@ -10,15 +10,7 @@ const store = configureStore({
         better: betterReducer, 
     },
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [
-            "saveLastDay", "updateBetterScore", "updateBetterScore", "dispatch"
-          // the action with non-serializable payload
-          // e.g. "actionWithFilePayload"
-        ],
-      },
-    }),
+      getDefaultMiddleware({serializableCheck:false})
 });
 
 export default store;

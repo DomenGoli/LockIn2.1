@@ -68,7 +68,7 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     useEffect(function() {
         if(!dbData) return;
         if(dbData && days?.length === 0) return;
-        if(days.length > 0) dispatch(saveLastDay(days.at(-1)))
+        if(dbData && days.length > 0) dispatch(saveLastDay(days.at(-1)))
     }, [dbData, days, dispatch])
 
 
