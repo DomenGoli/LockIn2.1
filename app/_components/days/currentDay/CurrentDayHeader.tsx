@@ -68,7 +68,7 @@ function CurrentDayHeader() {
         dispatch(saveDay());
         dispatch(closeDiary());
         setRating(0);
-        forceRerenderRating(Math.random());
+        // forceRerenderRating(Math.random());
     }
 
     function calculateBetterEveryDayScore(): number {

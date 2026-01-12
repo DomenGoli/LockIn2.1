@@ -42,7 +42,7 @@ TilePropsType) {
         setWidth(ref.current ? ref.current.offsetWidth : 0);
     }, []);
 
-   
+
 
     //// Za stale state ob savingDay()
     useEffect(
