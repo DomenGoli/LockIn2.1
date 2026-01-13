@@ -12,8 +12,7 @@ export async function connectToDatabase(){
         return client.db("lockin")
     }catch(err){
         console.log(err);
-    }
-}
+}}
 
 
 export async function getSavedDaysData() {
