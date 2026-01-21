@@ -1,7 +1,6 @@
 "use client"
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useEffect, useState } from "react";
-// import { getShortDateFormat } from "../../utils/helpers";
 import { saveNoteToLocalStorage } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 import { getShortDateFormat } from "@/app/_lib/helpers";
 

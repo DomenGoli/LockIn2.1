@@ -3,7 +3,6 @@ import SavedDaysList from "./SavedDaysList"
 
 async function SavedDaysListServerComponent() {
     const dbData = await getSavedDaysData()
-        console.log(dbData)
     
     if (!dbData)
         return (
@@ -12,8 +11,6 @@ async function SavedDaysListServerComponent() {
             </div>
         );
 
-    
-    
     return (
         <div className="overflow-scroll no-scrollbar">
             <SavedDaysList dbData={JSON.stringify(dbData)}/>

@@ -20,10 +20,7 @@ function BeBetter() {
     const { isNoteOpen } = useAppSelector((store) => store.diary);
     const dispatch = useAppDispatch();
 
-    // const dateRef = useRef(lastSavedDayDate);
-    // dateRef.current = lastSavedDayDate;
     const todayRef = useRef(new Date());
-    // todayRef.current = new Date();
 
     function handleReset() {
         dispatch(resetScore());
@@ -32,25 +29,24 @@ function BeBetter() {
 
     const calculateMissedDays = useCallback(
         function calculateMissedDays() {
-            console.log(
-                `test: ${new Date()} ${differenceInCalendarDays(
-                    new Date().setHours(0, 0, 0, 0),
-                    new Date(2026, 0, 2).setHours(0, 0, 0, 0)
-                )}`
-            );
+            // console.log(
+            //     `test: ${new Date()} ${differenceInCalendarDays(
+            //         new Date().setHours(0, 0, 0, 0),
+            //         new Date(2026, 0, 2).setHours(0, 0, 0, 0)
+            //     )}`
+            // );
             // ce je danes ze checkiru razliko med datumih, takoj returna 0
+            console.log(`lastsaveddate: ${new Date(lastSavedDayDate)}`);
+            console.log(`lastdatechecked: ${new Date(lastDayChecked)}` );
+            
+            if (lastSavedDayDate === new Date("1970, 1, 1")) return null; // zaradi asynch fetchanja zadnjega dneva iz database
+
             if (
                 todayRef.current.setHours(0, 0, 0, 0) ===
                 lastDayChecked.setHours(0, 0, 0, 0)
             )
-                return 0;
+                return null;
 
-            if (!lastSavedDayDate) return; // zaradi asynch fetchanja zadnjega dneva iz database
-            console.log(`lastsaveddate: ${new Date(lastSavedDayDate)}`);
-
-            // const lastSavedDayDate = new Date(dateRef.current);
-
-            // const lastSavedDayDate = new Date(lastSavedDayDate);
             const missedDays =
                 differenceInCalendarDays(todayRef.current, lastSavedDayDate);
             console.log(`Missed days: ${missedDays}`);
@@ -62,7 +58,6 @@ function BeBetter() {
     const calculateMissedDaysScore = useCallback(
         function calculateMissedDaysScore() {
             const missedDays = calculateMissedDays();
-            console.log(`Missed days: ${missedDays}`);
             if (!missedDays) return 0;
             return missedDays * actsArray.length * pointsConfig.UNTOUCHED_MAJOR;
         },
@@ -75,15 +70,12 @@ function BeBetter() {
             if (missedDaysScore)
                 dispatch(saveLastDateReference(todayRef.current));
 
-            // console.log(missedDaysScore);
             dispatch(updateBetterScore(missedDaysScore));
         },
         [dispatch, calculateMissedDaysScore]
     );
 
-    console.log(
-        `lastdatechecked: ${new Date(lastDayChecked.setHours(0, 0, 0, 0))}`
-    );
+    
     if (isNoteOpen) return null;
 
     return (

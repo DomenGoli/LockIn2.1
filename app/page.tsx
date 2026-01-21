@@ -1,4 +1,3 @@
-// "use client";
 import { Toaster } from "react-hot-toast";
 import CurrentDay from "@/app/_components/days/currentDay/CurrentDay";
 import StoreProvider from "./StoreProvider";

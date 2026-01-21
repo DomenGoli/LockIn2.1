@@ -18,12 +18,6 @@ const initialState: initialStateType = {
     plan: ""
 };
 
-// type PrepareType = {
-//     note: string;
-//     dayId: string;
-//     date: string;
-// }
-
 type DiaryItemType = {
     note: string;
     planData: string;
@@ -66,11 +60,6 @@ const diarySlice = createSlice({
                 }
             },
         },
-        // toggleOpenDiary(state, action) {
-        //     console.log(action.payload);
-        //     state.data = action.payload
-        //     state.isOpen = !state.isOpen
-        // }
         toggleOpenPlan: {
             prepare(text: string, dayId: string, date?: Date) {
                 return { payload: { text, dayId, date } };

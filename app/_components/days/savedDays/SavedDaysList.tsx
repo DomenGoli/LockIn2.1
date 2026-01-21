@@ -1,14 +1,9 @@
 "use client"
-// import { useLoaderData } from "react-router";
 import SavedDay from "./SavedDay";
-// import { getDaysApi } from "../../../service/apiDays";
 import { useEffect, useRef, useState } from "react";
 import DayHeader from "./SavedDayHeader";
 import TileList from "../TileList";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-// import { useQuery } from "@tanstack/react-query";
-// import Spinner from "@/app/_ui/Spinner";
-// import { differenceInCalendarDays } from "date-fns";
 import { saveLastDay } from "@/app/_lib/features/beBetter/betterSlice";
 
 // type DayActivities = {
@@ -30,8 +25,6 @@ type LoadedDataType = {
 };
 
 function SavedDaysList({ dbData }: {dbData: string}) {
-    // const [days, setDays] = useState()
-    // const days = dbData ? JSON.parse(dbData) : [];
     const days = JSON.parse(dbData)
 
     // const {
@@ -72,7 +65,11 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     useEffect(function() {
         if(!dbData) return;
         if(dbData && days?.length === 0) return;
-        if(days && days?.length > 0) dispatch(saveLastDay(days.at(-1)))
+        if(days && days?.length > 0) {
+            dispatch(saveLastDay(days.at(-1)))
+            console.log(`Last date from DB: ${new Date(days.at(-1).date)}`);
+        }
+        
     }, [dbData, days, dispatch])
 
 

@@ -34,9 +34,8 @@ TilePropsType) {
     const dispatch = useAppDispatch();
     const [input, setInput] = useState(() => act.input);
     const [width, setWidth] = useState(0);
-    // const [aux, setAux] = useState()
 
-    const ref = useRef<any | null>(null);
+    const ref = useRef<HTMLDivElement | null>(null);
     
     useEffect(function () {
         setWidth(ref.current ? ref.current.offsetWidth : 0);
@@ -98,7 +97,7 @@ TilePropsType) {
 
     return (
         <div
-            ref={ref}
+            ref={ref} //  ZAKAJ SM TO DAL TUKAJ??????? Je obsolete?
             className={`grid ${getMinWidth()} px-1 text-black ${getTileColor()}`}
         >
             <div className="flex items-center justify-between">
@@ -124,9 +123,12 @@ TilePropsType) {
                             onChange={(e) => setInput(e.target.value)}
                             onBlur={handleSavingInput}
                             className="pl-0.5 bg-(--ozadje) w-15 hover:border-(--ER-text) border-black border text-(--ER-text)"
+                            placeholder="0"
+                            onFocus={e => {
+                                e.target.value = e.target.value === "0" ? "" : input
+                                }
+                            }
                         />
-
-                        {/* {enota} */}
                     </span>
                 )}
 

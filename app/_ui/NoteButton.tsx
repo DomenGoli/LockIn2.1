@@ -13,7 +13,7 @@ function NoteButton({ data, planData, dayId = "0", date }: { data: string; planD
     return (
         <div>
             <Button onClick={handleNote}>
-                {dayId === "0" ? "Belezka" : <LuNotebookPen />}
+                {dayId === "0" ? "Beležka" : <LuNotebookPen />}
             </Button>
         </div>
     );

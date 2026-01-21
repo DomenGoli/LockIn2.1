@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { getShortDateFormat } from "@/app/_lib/helpers";
 
 function Plan() {
-    // const {plan} = useAppSelector(store => store.dayObject)
     const {plan, date, dayId} = useAppSelector(store => store.diary)
     const {isNoteOpen} = useAppSelector(store => store.diary)
     const [value, setValue] = useState(() => plan)

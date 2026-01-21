@@ -1,7 +1,6 @@
 "use client"
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-// import { deleteDayApi } from "../../../service/apiDays";
 
 ///////////////////////// TYPES /////////////////////////////////////////////
 type ActivityType = {
@@ -14,7 +13,8 @@ type ActivityType = {
     overUnder: string;
     width: number;
     actState: string;
-    betterPriority?: string
+    betterPriority?: string;
+    comment?: string;
 };
 
 type InitialStateType = {
@@ -79,6 +79,7 @@ const dayObjectSlice = createSlice({
                     act.unit = action.payload.unit
                     act.overUnder = action.payload.overUnder
                     act.betterPriority = action.payload.betterPriority
+                    act.comment = action.payload.comment
                 }
             });
             if(typeof window !== "undefined") {

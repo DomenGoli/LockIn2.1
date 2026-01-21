@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
 import icons from "@/app/_ui/icons";
-// import Button from "./Button";
 
 function StopWatch({mode}: {mode: string}) {
     const [isPaused, setIsPaused] = useState(true);

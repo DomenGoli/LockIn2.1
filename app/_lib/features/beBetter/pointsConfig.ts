@@ -1,11 +1,3 @@
-// const MULTIPLIER = 10;
-// export const pointsConfig = {
-//     COMPLETED: 3 / MULTIPLIER,
-//     ATTEMPTED: 1 / MULTIPLIER,
-//     UNTOUCHED: -3 / MULTIPLIER,
-//     STREAK: 6 / MULTIPLIER,
-// };
-
 const MULTIPLIER = 10;
 export const pointsConfig = {
     COMPLETED_MAJOR: 4 / MULTIPLIER,

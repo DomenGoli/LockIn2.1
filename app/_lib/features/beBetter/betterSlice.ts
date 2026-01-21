@@ -54,7 +54,7 @@ const initialState: InitialStateType = {
     betterScore: loadLocalStoredData(),
     deltaScore: 0,
     lastDay: {
-        date: "1970, 1, 1",
+        date: "1970, 0, 1",
         actsArray: [],
         id: "",
         note: "",

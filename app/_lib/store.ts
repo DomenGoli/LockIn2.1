@@ -10,7 +10,7 @@ const store = configureStore({
         better: betterReducer, 
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({serializableCheck:false})
+    getDefaultMiddleware({serializableCheck:false})
 });
 
 export default store;

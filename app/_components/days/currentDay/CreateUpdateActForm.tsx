@@ -8,6 +8,7 @@ import {
 } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 import Button from "@/app/_ui/Button";
 import FormRow from "@/app/_ui/FormRow";
+import Comment from "@/app/_ui/Comment";
 
 const inputStyle =
     "border-solid border-[1px] border-[var(--color-grey-300)] bg-[var(--color-grey-0)] p-[0.2rem_0.2rem] text-black";
@@ -39,6 +40,8 @@ function CreateUpdateActForm({
     const [betterPriority, setBetterPriority] = useState(
         setInitialState("betterPriority", "major")
     );
+    const [comment, setComment] = useState(setInitialState("comment"));
+
     const id = crypto.randomUUID().slice(0, 8);
 
     function setInitialState(state: string, initial = "") {
@@ -63,6 +66,7 @@ function CreateUpdateActForm({
                     overUnder,
                     id: actToUpdate.id,
                     betterPriority,
+                    comment,
                 })
             );
         } else {
@@ -76,6 +80,7 @@ function CreateUpdateActForm({
                     overUnder,
                     id,
                     betterPriority,
+                    comment,
                 })
             );
         }
@@ -91,6 +96,7 @@ function CreateUpdateActForm({
 
     return (
         <div className="flex flex-col gap-5">
+            <Comment value={comment} setValue={setComment}/>
             <div className="flex items-center justify-center">
                 <label className="text-3xl">
                     {isUpdateSession ? "Uredi aktivnost" : "Dodaj aktivnost"}
@@ -194,4 +200,3 @@ function CreateUpdateActForm({
 }
 
 export default CreateUpdateActForm;
-

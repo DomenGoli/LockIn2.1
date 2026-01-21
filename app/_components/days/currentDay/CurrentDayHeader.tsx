@@ -3,7 +3,7 @@
 import Button from "@/app/_ui/Button";
 import toast from "react-hot-toast";
 import { getDateFormat } from "@/app/_lib/helpers";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import StarRating from "../../../_ui/StarRating";
 import AddAct from "./AddAct";
 import NoteButton from "@/app/_ui/NoteButton";
@@ -119,6 +119,11 @@ function CurrentDayHeader() {
         });
         return points;
     }
+
+
+    useEffect(function() {
+        if(!plan) toast("Napiši današnji plan v beležko!", {icon: "🦁"})
+    }, [plan])
 
     return (
         <div className="flex gap-3 p-1">

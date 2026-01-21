@@ -4,7 +4,7 @@ import { collection } from "@/app/db";
 import { MongoClient } from "mongodb";
 
 
-const client = new MongoClient("mongodb+srv://tester1:tester1@cluster0.fp8w9ld.mongodb.net/?appName=Cluster0")
+const client = new MongoClient(process.env.MONGODB_URL)
 
 export async function connectToDatabase(){
     try {
@@ -22,7 +22,7 @@ export async function getSavedDaysData() {
     const db = await connectToDatabase()
     const data = []
     if(db) {
-        const cursor = db.collection(collection).find()
+        const cursor = db.collection(collection).find().sort({date: 1})
         for await(const doc of cursor) {
             data.push(doc)
         }

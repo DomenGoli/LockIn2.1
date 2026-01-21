@@ -1,7 +1,6 @@
 import Button from "@/app/_ui/Button";
 import { HiOutlineTrash } from "react-icons/hi2";
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { deleteDayApi } from "../../../service/apiDays";
 import toast from "react-hot-toast";
 import { getDateFormat } from "@/app/_lib/helpers";
 import { deleteDayFromDatabase } from "@/app/_lib/service/actions";
@@ -60,7 +59,7 @@ function SavedDayHeader({ day }: { day: DayObjectType }) {
                         <NoteButton
                             data={day?.note}
                             planData={day.plan}
-                            dayId={day.id}
+                            dayId={day._id}
                             date={day?.date}
                         />
                     ) : (

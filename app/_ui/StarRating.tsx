@@ -20,6 +20,7 @@ const starContainerStyle = {
 //   className: PropTypes.string,
 //   onSetRating: PropTypes.func,
 // };
+
 type StarRatingType = {
     maxRating: number;
     defaultRating?: number;

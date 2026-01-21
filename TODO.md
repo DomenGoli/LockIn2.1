@@ -10,15 +10,20 @@
 // TODO dodaj inputs type checking
 // TODO dodaj funkcijo: act comments (rabim dodat novo okno zaradi prostora)
 // TODO dodaj potrditev za reset Better scora
-// TODO input field dodaj placeholderje, ko kliknes input lahko takoj pises brez brisanja 0
-// TODO popravi funkicjo za chekiranje missed days
 // TODO popravi toaste za dodajanje in brisanje dnevov. prej so bili vezani na reactQuery
+// TODO ce je missed day, zbrisi temp data za current day, ker ostane od zadnjic
+// TODO naredi gumb za komment kot toggle
+// TODO ENV LOCAL!!!!
+// TODO 
 // TODO 
 // TODO 
 // TODO 
 
 
 // DONE
+// TODO naredi prompt za plan, ce se ni
+// TODO input field dodaj placeholderje, ko kliknes input lahko takoj pises brez brisanja 0
+// TODO popravi funkicjo za chekiranje missed days
 // TODO bug: saveDay funkicja narobe izracuna better points
 // TODO dodaj v dayHeader koliko je bila tisti dan sprememba betterScore
 // TODO bug: ko shranis dan se ne zbrise/zapre belezka okno

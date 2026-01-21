@@ -7,6 +7,7 @@ import React, {
 import { createPortal } from "react-dom";
 // import { useOutsideModalClick } from "../hooks/useOutsideModalClick";
 import { LuArrowLeftFromLine } from "react-icons/lu";
+import { LuChevronLeft } from "react-icons/lu";
 
 type ContextType = {
     handleOpen: () => void;
@@ -37,6 +38,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
 
     return (
         <ModalContext.Provider value={{ isOpen, handleClose, handleOpen }}>
+            {/* <button className="bg-none border p-[0.4rem] absolute transform-[translateX-[3.8rem]] top-[3rem] right-[-1rem] cursor-pointer hover:text-white z-100">test</button> */}
             {children}
         </ModalContext.Provider>
     );
@@ -52,7 +54,22 @@ function Open({ children }: { children: React.ReactNode }) {
     );
 }
 
-function Window({ children }: { children: React.ReactNode }) {
+type WindowStylesType = {
+    [key: string]: string;
+};
+
+const windowStyles: WindowStylesType = {
+    first: "fixed top-0 left-0 bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transition-all duration-[2s] w-[393px] h-screen border-r-stone-400 border-r-2",
+    second: "fixed top-0 left-[393px] bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transition-all duration-[2s] h-[60vh] border-r-stone-400 border-r-2 border-b-stone-400 border-b-3 shadow-amber-50",
+};
+
+function Window({
+    children,
+    variation = "first",
+}: {
+    children: React.ReactNode;
+    variation?: string;
+}) {
     const { isOpen, handleClose } = useContext(ModalContext);
 
     // const {ref} = useOutsideModalClick(handleClose)
@@ -60,17 +77,25 @@ function Window({ children }: { children: React.ReactNode }) {
     if (!isOpen) return null;
 
     return createPortal(
-        <div
-            role="modal-window"
-            className="fixed top-0 left-0 bg-[var(--day)] rounded-[var(--border-radius-lg)] p-[3.2rem_1.6rem] transition-all duration-[2s] h-[100vh] border-r-(--ozadje) border-r-2"
-        >
-            <button
-                role="close"
-                className="bg-none border-none p-[0.4rem] absolute transform-[translateX-[3.8rem]] top-[1.2rem] right-[20.9rem] cursor-pointer hover:text-white"
-                onClick={handleClose}
-            >
-                <LuArrowLeftFromLine size="1.6rem" />
-            </button>
+        <div role="modal-window" className={windowStyles[variation]}>
+            {variation === "first" && (
+                <button
+                    role="close"
+                    className="bg-none border-none p-[0.4rem] absolute transform-[translateX-[3.8rem]] top-[1.2rem] right-[20.9rem] cursor-pointer hover:text-white"
+                    onClick={handleClose}
+                >
+                    <LuArrowLeftFromLine size="1.6rem" />
+                </button>
+            )}
+            {/* {variation === "first" && <CommentButton />} */}
+            {variation === "second" && (
+                <button
+                    className="bg-none border-0 w-0.1 absolute transform-[translateX-[3.8rem]] top-[1.6rem] right-81.5 cursor-pointer hover:text-white  shadow-amber-50 shadow-r-"
+                    onClick={handleClose}
+                >
+                    <LuChevronLeft size="1.6rem" />
+                </button>
+            )}
             <div>
                 {cloneElement(
                     children as React.ReactElement<{
@@ -87,4 +112,3 @@ function Window({ children }: { children: React.ReactNode }) {
 //4. properties
 Modal.Open = Open;
 Modal.Window = Window;
-
