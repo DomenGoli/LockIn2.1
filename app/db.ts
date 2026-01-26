@@ -1,1 +1,1 @@
-export const collection = "daysDomen"
+export const collection = "days"
