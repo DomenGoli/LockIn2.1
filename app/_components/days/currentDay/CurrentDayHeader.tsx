@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 // import { createDayApi } from "../../../service/apiDays";
 // import { updateBetterScore } from "../../better/betterSlice";
 import { pointsConfig } from "@/app/_lib/features/beBetter/pointsConfig";
-import { saveDay, updateStreak } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
+import { saveDay } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 import { closeDiary } from "@/app/_lib/features/diary/diarySlice";
 import { saveDayToDatabaseAction } from "@/app/_lib/service/actions";
 import { differenceInCalendarDays } from "date-fns";

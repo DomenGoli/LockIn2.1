@@ -13,7 +13,7 @@ function SubWindow({
     name: string
 }) {
     return (
-        <div className="fixed top-0 left-[393px] bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transition-all duration-[2s] border-r-stone-400 border-r-2 border-b-stone-400 border-b-2 shadow-amber-50">
+        <div className="fixed top-0 left-98.25 bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transition-all duration-[2s] border-r-stone-400 border-r-2 border-b-stone-400 border-b-2 shadow-amber-50">
             <div className="flex flex-col gap-20">
                 <div className="flex flex-col gap-2 items-center mt-2">
                     <p>Komentar</p>

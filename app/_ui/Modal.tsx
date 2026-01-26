@@ -55,14 +55,15 @@ function Open({ children }: { children: React.ReactNode }) {
     );
 }
 
-type WindowStylesType = {
-    [key: string]: string;
-};
+//// lahko zbrises vse
+// type WindowStylesType = {
+//     [key: string]: string;
+// };
 
-const windowStyles: WindowStylesType = {
-    first: "first fixed top-0 left-0 bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transform-[translateX-[3.8rem]] shadow-lg transition-all duration-[2s] w-[393px] border-r-stone-400 border-r-2 border-b-stone-400 border-b-2",
-    second: "fixed top-0 left-[393px] bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transition-all duration-[2s] h-screen border-r-stone-400 border-r-2 shadow-amber-50",
-};
+// const windowStyles: WindowStylesType = {
+//     first: "first fixed top-0 left-0 bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transform-[translateX-[3.8rem]] shadow-lg transition-all duration-[2s] w-[393px] border-r-stone-400 border-r-2 border-b-stone-400 border-b-2",
+//     second: "fixed top-0 left-[393px] bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transition-all duration-[2s] h-screen border-r-stone-400 border-r-2 shadow-amber-50",
+// };
 
 function Window({
     children,
@@ -78,7 +79,7 @@ function Window({
 
     return createPortal(
         <div ref={ref} className="">
-            <div role="modal-window" className="first fixed top-0 left-0 bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transform-[translateX-[3.8rem]] shadow-lg transition-all duration-[2s] w-[393px] border-r-stone-400 border-r-2 border-b-stone-400 border-b-2">
+            <div role="modal-window" className="first fixed top-0 left-0 bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transform-[translateX-[3.8rem]] shadow-lg transition-all duration-[2s] w-98.25 border-r-stone-400 border-r-2 border-b-stone-400 border-b-2">
                 {variation === "first" && (
                     <button
                     role="close"

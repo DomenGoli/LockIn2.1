@@ -1,11 +1,11 @@
 "use client"
 import SavedDay from "./SavedDay";
-import { useEffect, useRef, useState } from "react";
-import DayHeader from "./SavedDayHeader";
+import { useEffect, useRef } from "react";
 import TileList from "../TileList";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { saveLastDay } from "@/app/_lib/features/beBetter/betterSlice";
 import { saveActsStateHashMap } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
+import SavedDayHeader from "./SavedDayHeader";
 
 // type DayActivities = {
 //     name: string;
@@ -31,15 +31,15 @@ type ActivityType = {
     // longestUntouchedStreak: number;
 };
 
-type LoadedDataType = {
+type DayObjectType = {
     date: Date;
-    actsArray: ActivityType[];
+    actsArray: [];
     id: string;
     note: string;
     plan: string;
     rating: string;
-    _id: string;
-    betterPoints: number
+    betterPoints: number;
+    _id: string
 };
 
 
@@ -89,7 +89,7 @@ function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateH
     //     const auxArray: AuxObject[] = []
 
     //     for(let i=0; i<days.at(-1).actsArray.length; i++) {
-    //         days.forEach((day:LoadedDataType) => {
+    //         days.forEach((day:DayObjectType) => {
     //             const id = day.actsArray[i].id
     //             const actState = day.actsArray[i].actState
 
@@ -106,7 +106,7 @@ function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateH
     //         })
     //     }
 
-    //     days.forEach((day: LoadedDataType) => {
+    //     days.forEach((day: DayObjectType) => {
     //         for(let i=0; i < day.actsArray.length; i++) {
 
     //         }
@@ -140,11 +140,11 @@ function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateH
 
     return (
         <div className="flex flex-col gap-3">
-            {days?.map((day: LoadedDataType, i: number) => (
+            {days?.map((day: DayObjectType, i: number) => (
                 <SavedDay key={i}>
-                    <DayHeader day={day} />
+                    <SavedDayHeader day={day} />
                     <TileList
-                        actsArray={day.actsArray.filter((act: LoadedDataType) =>
+                        actsArray={day.actsArray.filter((act:ActivityType) =>
                             existingActsIds.includes(act.id)
                         )}
                         tileMode="display"
