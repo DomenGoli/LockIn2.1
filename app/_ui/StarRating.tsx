@@ -56,7 +56,7 @@ export default function StarRating({
     };
 
     return (
-        <div className="min-w-70">
+        <div className="min-w-75">
             <div style={containerStyle} className={className}>
                 <div style={starContainerStyle}>
                     {Array.from({ length: maxRating }, (_, i) => (
