@@ -43,9 +43,9 @@ function loadDateReference() {
     if(typeof window !== "undefined") {
 
         const storedDateReference = localStorage?.getItem("lastDayChecked")
-        return storedDateReference ? JSON.parse(storedDateReference) : "1970, 1, 1"
+        return storedDateReference ? JSON.parse(storedDateReference) : ""
     }
-    else return "1970, 1, 1"
+    else return ""
 }
 
 
@@ -54,7 +54,7 @@ const initialState: InitialStateType = {
     betterScore: loadLocalStoredData(),
     deltaScore: 0,
     lastDay: {
-        date: "1970, 0, 1",
+        date: "",
         actsArray: [],
         id: "",
         note: "",

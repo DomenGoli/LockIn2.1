@@ -1,6 +1,9 @@
 "use client"
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { enableMapSet } from "immer";
+
+enableMapSet()
 
 ///////////////////////// TYPES /////////////////////////////////////////////
 type ActivityType = {
@@ -15,6 +18,9 @@ type ActivityType = {
     actState: string;
     betterPriority?: string;
     comment?: string;
+    // curStreak: number;
+    // longestCompletedStreak: number;
+    // longestUntouchedStreak: number;
 };
 
 type InitialStateType = {
@@ -23,6 +29,7 @@ type InitialStateType = {
     note: string;
     plan: string;
     deltaScore?: number;
+    actsStateHashMap: Map<any, any> | null;
 };
 
 type InputsType = {
@@ -51,6 +58,7 @@ const initialState: InitialStateType = {
     actsArray: loadLocalStoredData().actsArray || [],
     note: loadLocalStoredData().note || "",
     plan: loadLocalStoredData().plan || "",
+    actsStateHashMap: null,
 };
 const dayObjectSlice = createSlice({
     name: "dayObject",
@@ -129,13 +137,26 @@ const dayObjectSlice = createSlice({
             if(typeof window !== "undefined") {
                 localStorage.setItem("currentDayObject", JSON.stringify({...state}))
             }
-        }
+        },
+        saveActsStateHashMap(state, action) {
+            state.actsStateHashMap = action.payload
+        },
+        // updateStreak(state) {
+        //     state.actsArray.map(activity => {
+        //         if(activity.actState === "completed") {
+        //             if(!activity.curStreak) activity.curStreak = 1;
+        //             else activity.curStreak ++;
+        //         }
+        //         else if(activity.actState === "untouched") activity.curStreak = 0;
+        //     })
+        //     localStorage.setItem("currentDayObject", JSON.stringify({...state}))
+        // }
     },
 });
 
 
 
 export default dayObjectSlice.reducer;
-export const {saveDay, addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage } =
+export const {saveDay, addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage, saveActsStateHashMap } =
     dayObjectSlice.actions;
 

@@ -28,7 +28,7 @@ function BeBetter() {
     // console.log(`today: ${todayRef.current.setHours(0, 0, 0, 0)}`);
 
     const calculateMissedDays = useCallback(
-        function calculateMissedDays() {
+        function calculateMissedDays(): number | null {
             // console.log(
             //     `test: ${new Date()} ${differenceInCalendarDays(
             //         new Date().setHours(0, 0, 0, 0),
@@ -38,9 +38,11 @@ function BeBetter() {
             // ce je danes ze checkiru razliko med datumih, takoj returna 0
             console.log(`lastsaveddate: ${new Date(lastSavedDayDate)}`);
             console.log(`lastdatechecked: ${new Date(lastDayChecked)}` );
-            
-            if (lastSavedDayDate === new Date("1970, 1, 1")) return null; // zaradi asynch fetchanja zadnjega dneva iz database
 
+            // Guard clause zaradi asynch fetchanja zadnjega dneva iz database
+            if (!lastSavedDayDate) return null; 
+
+            // checkira ce je danse ze preveril missed days
             if (
                 todayRef.current.setHours(0, 0, 0, 0) ===
                 lastDayChecked.setHours(0, 0, 0, 0)
@@ -48,7 +50,7 @@ function BeBetter() {
                 return null;
 
             const missedDays =
-                differenceInCalendarDays(todayRef.current, lastSavedDayDate);
+                differenceInCalendarDays(todayRef.current, lastSavedDayDate) - 1;
             console.log(`Missed days: ${missedDays}`);
             return missedDays;
         },
@@ -56,7 +58,7 @@ function BeBetter() {
     );
 
     const calculateMissedDaysScore = useCallback(
-        function calculateMissedDaysScore() {
+        function calculateMissedDaysScore(): number {
             const missedDays = calculateMissedDays();
             if (!missedDays) return 0;
             return missedDays * actsArray.length * pointsConfig.UNTOUCHED_MAJOR;

@@ -6,7 +6,7 @@ type StylesType = {
 
 const styles: StylesType  = {
     primary: "bg-blue-600 inline-block uppercase px-2 hover:bg-blue-500 cursor-pointer transition-all tracking-wide rounded-md active:bg-blue-300 break-normal flex items-center h-5 min-w-[2.2rem]",
-    tileTitle: "cursor-pointer transition-all tracking-wide rounded-md active:text-amber-600 hover:text-blue-800",
+    tileTitle: "cursor-pointer tracking-wide rounded-[1px] hover:outline-solid hover:outline-1 w-full hover:outline-stone-800",
     form: "bg-blue-600 inline-block uppercase px-2 hover:bg-blue-500 cursor-pointer transition-all tracking-wide rounded-md active:bg-blue-300 break-normal flex items-center h-10 min-w-[2.2rem]"
 }
 
@@ -23,7 +23,7 @@ export default function Button({
     variation?: string
 }): React.JSX.Element {
 
-    // console.log(new Date(2026,0,19).getTime());
+    // console.log(new Date(2026,0,23).getTime());
 
 
     return (

@@ -5,6 +5,7 @@ import DayHeader from "./SavedDayHeader";
 import TileList from "../TileList";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { saveLastDay } from "@/app/_lib/features/beBetter/betterSlice";
+import { saveActsStateHashMap } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 
 // type DayActivities = {
 //     name: string;
@@ -13,9 +14,26 @@ import { saveLastDay } from "@/app/_lib/features/beBetter/betterSlice";
 //     input: string
 // };
 
+type ActivityType = {
+    name: string;
+    inputMode: "input" | "select";
+    target: string;
+    input: string;
+    unit: string;
+    id: string;
+    overUnder: string;
+    width: number;
+    actState: string;
+    betterPriority?: string;
+    comment?: string;
+    // curStreak: number;
+    // longestCompletedStreak: number;
+    // longestUntouchedStreak: number;
+};
+
 type LoadedDataType = {
     date: Date;
-    actsArray: [];
+    actsArray: ActivityType[];
     id: string;
     note: string;
     plan: string;
@@ -24,7 +42,9 @@ type LoadedDataType = {
     betterPoints: number
 };
 
-function SavedDaysList({ dbData }: {dbData: string}) {
+
+
+function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateHashMap: Map}) {
     const days = JSON.parse(dbData)
 
     // const {
@@ -60,17 +80,52 @@ function SavedDaysList({ dbData }: {dbData: string}) {
     //     dispatch(saveLastDay(days.at(-1)))
     // }, [dispatch, days, isLoading])
 
-    
+    // type AuxObject = {
+    //     id: string;
+    //     streak: number;
+    // }
+
+    // function updateStreak() {
+    //     const auxArray: AuxObject[] = []
+
+    //     for(let i=0; i<days.at(-1).actsArray.length; i++) {
+    //         days.forEach((day:LoadedDataType) => {
+    //             const id = day.actsArray[i].id
+    //             const actState = day.actsArray[i].actState
+
+    //             if(!auxArray.includes((el: AuxObject) => el.id === day.actsArray[i].id)) {
+    //                 const auxEle: AuxObject = {
+    //                     id,
+    //                     streak: 0,
+    //                 }
+    //                 auxArray.push(auxEle)
+    //             }
+
+
+    //             if(actState === "complete") auxArray[i].streak ++
+    //         })
+    //     }
+
+    //     days.forEach((day: LoadedDataType) => {
+    //         for(let i=0; i < day.actsArray.length; i++) {
+
+    //         }
+    //     });
+    // }
 
     useEffect(function() {
         if(!dbData) return;
         if(dbData && days?.length === 0) return;
         if(days && days?.length > 0) {
             dispatch(saveLastDay(days.at(-1)))
+            dispatch(saveActsStateHashMap(actsStateHashMap))
             console.log(`Last date from DB: ${new Date(days.at(-1).date)}`);
+            console.log(actsStateHashMap);
         }
         
-    }, [dbData, days, dispatch])
+    }, [dbData, days, dispatch, actsStateHashMap])
+
+    
 
 
     // if(error) return (<p>{error.message}</p>)

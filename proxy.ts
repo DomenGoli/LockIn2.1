@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export function middleware() {
+export function proxy() {
     // retrieve the current response
     const res = NextResponse.next()
 

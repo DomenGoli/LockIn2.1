@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 // import { createDayApi } from "../../../service/apiDays";
 // import { updateBetterScore } from "../../better/betterSlice";
 import { pointsConfig } from "@/app/_lib/features/beBetter/pointsConfig";
-import { saveDay } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
+import { saveDay, updateStreak } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 import { closeDiary } from "@/app/_lib/features/diary/diarySlice";
 import { saveDayToDatabaseAction } from "@/app/_lib/service/actions";
 import { differenceInCalendarDays } from "date-fns";
@@ -65,11 +65,14 @@ function CurrentDayHeader() {
             console.log(err);
         }
 
+        // dispatch(updateStreak())
         dispatch(saveDay());
         dispatch(closeDiary());
         setRating(0);
         forceRerenderRating(Math.random());
     }
+
+    
 
     function calculateBetterEveryDayScore(): number {
         let points = 0;
@@ -126,7 +129,7 @@ function CurrentDayHeader() {
     }, [plan])
 
     return (
-        <div className="flex gap-3 p-1">
+        <div className="flex gap-3 p-1 rou">
             <p>{getDateFormat(date)}</p>
             <AddAct />
             <NoteButton planData={plan} data={note} />

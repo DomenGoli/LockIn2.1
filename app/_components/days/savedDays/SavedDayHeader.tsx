@@ -72,13 +72,16 @@ function SavedDayHeader({ day }: { day: DayObjectType }) {
                         </Button>
                     </form>
                 </div>
+                
+                <div>
 
                 <p
                     className="ml-4"
                     style={{ color: day.betterPoints >= 0 ? "green" : "red" }}
-                >
+                    >
                     {day.betterPoints && `${day?.betterPoints?.toFixed(1)}%`}
                 </p>
+                    </div>
                 {/* {deleting && <p>Brišemo...</p>} */}
             </div>
         </div>

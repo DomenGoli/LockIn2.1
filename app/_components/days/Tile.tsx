@@ -97,12 +97,12 @@ TilePropsType) {
 
     return (
         <div
-            ref={ref} //  ZAKAJ SM TO DAL TUKAJ??????? Je obsolete?
+            //ref={ref} //  ZAKAJ SM TO DAL TUKAJ??????? Je obsolete? Bilo za dolocanje sirine vsakega Tila. Obsolete
             className={`grid ${getMinWidth()} px-1 text-black ${getTileColor()}`}
         >
             <div className="flex items-center justify-between">
                 {tileMode === "display" && (
-                    <p className="text-center">{act.name}</p>
+                    <p className="flex justify-center w-full">{act.name}</p>
                 )}
 
                 {tileMode !== "display" && (
@@ -110,13 +110,13 @@ TilePropsType) {
                 )}
             </div>
 
-            <div className="flex gap-1">
+            <div className="flex gap-1 justify-center">
                 {/* ////////////////  Presentational */}
-                {tileMode === "display" && <span>{act.input}</span>}
+                {tileMode === "display" && <span className="">{act.input}</span>}
 
                 {/* ////////////////  Statefull za Input day */}
                 {tileMode === "input" && act.inputMode === "input" && (
-                    <span>
+                    <span className="">
                         <input
                             type="number"
                             value={input}

@@ -9,6 +9,8 @@ import {
 import Button from "@/app/_ui/Button";
 import FormRow from "@/app/_ui/FormRow";
 import Comment from "@/app/_ui/Comment";
+import SubWindow from "@/app/_ui/SubWindow";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 const inputStyle =
     "border-solid border-[1px] border-[var(--color-grey-300)] bg-[var(--color-grey-0)] p-[0.2rem_0.2rem] text-black";
@@ -30,17 +32,18 @@ function CreateUpdateActForm({
     const dispatch = useAppDispatch();
     const [name, setName] = useState(setInitialState("name"));
     const [inputMode, setInputMode] = useState(
-        setInitialState("inputMode", "input")
+        setInitialState("inputMode", "input"),
     );
     const [target, setTarget] = useState(setInitialState("target"));
     const [unit, setUnit] = useState(setInitialState("unit", "min"));
     const [overUnder, setOverUnder] = useState(
-        setInitialState("overUnder", "over")
+        setInitialState("overUnder", "over"),
     );
     const [betterPriority, setBetterPriority] = useState(
-        setInitialState("betterPriority", "major")
+        setInitialState("betterPriority", "major"),
     );
     const [comment, setComment] = useState(setInitialState("comment"));
+    const [subWindow, setSubwindow] = useState(false);
 
     const id = crypto.randomUUID().slice(0, 8);
 
@@ -67,7 +70,7 @@ function CreateUpdateActForm({
                     id: actToUpdate.id,
                     betterPriority,
                     comment,
-                })
+                }),
             );
         } else {
             dispatch(
@@ -81,7 +84,7 @@ function CreateUpdateActForm({
                     id,
                     betterPriority,
                     comment,
-                })
+                }),
             );
         }
         if (onCloseModal) onCloseModal();
@@ -94,9 +97,25 @@ function CreateUpdateActForm({
         }
     }
 
+    function handleToggleSubWindow() {
+        setSubwindow((subWindow) => !subWindow);
+    }
+
     return (
         <div className="flex flex-col gap-5">
-            <Comment value={comment} setValue={setComment}/>
+            <button
+                className="bg-none w-0.1 border-0 absolute transform-[translateX-[3.8rem]] top-[1.6rem] right-[0.5rem] cursor-pointer hover:text-white"
+                onClick={handleToggleSubWindow}
+            >
+                {!subWindow ? <LuChevronRight size="1.6rem"/> : <LuChevronLeft size="1.6rem" />}
+            </button>
+            {subWindow && (
+                <SubWindow
+                    value={comment}
+                    setValue={setComment}
+                    id={actToUpdate?.id || null}
+                />
+            )}
             <div className="flex items-center justify-center">
                 <label className="text-3xl">
                     {isUpdateSession ? "Uredi aktivnost" : "Dodaj aktivnost"}
