@@ -5,10 +5,12 @@ function SubWindow({
     value,
     setValue,
     id,
+    name,
 }: {
     value: string;
     setValue: Dispatch<SetStateAction<string>>;
     id: string | null;
+    name: string
 }) {
     return (
         <div className="fixed top-0 left-[393px] bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transition-all duration-[2s] border-r-stone-400 border-r-2 border-b-stone-400 border-b-2 shadow-amber-50">
@@ -21,7 +23,7 @@ function SubWindow({
                         onChange={(e) => setValue(e.target.value)}
                     />
                 </div>
-                {id && <Statistics id={id} />}
+                {id && <Statistics id={id} name={name} />}
             </div>
         </div>
     );

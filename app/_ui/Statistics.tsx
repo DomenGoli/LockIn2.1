@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "../hooks";
 
-function Statistics({id}: {id: string}) {
+function Statistics({id, name}: {id: string, name: string}) {
     const { actsStateHashMap } = useAppSelector((store) => store.dayObject);
     const { statsArray, inputsArray } = actsStateHashMap?.get(id)
     
@@ -67,13 +67,13 @@ function Statistics({id}: {id: string}) {
     function getStreakName(actState: string): string {
         switch (actState) {
             case "completed":
-                return "Completed";
+                return '"Completed"';
             case "untouched":
-                return "Untouched";
+                return '"Untouched"';
             case "":
-                return "Untouched";
+                return '"Untouched"';
             case "attempted":
-                return "Not finished";
+                return '"Not finished"';
             default:
                 return "/";
         }
@@ -81,7 +81,7 @@ function Statistics({id}: {id: string}) {
 
     return (
         <div className="flex flex-col gap-2">
-                        <p className="text-center">Stats</p>
+                        <p className="text-center">Stats for {name}</p>
                         <div className="flex gap-1">
                             <span>Current streak:</span>
                             <span style={{color: getCurrentStreak() === "completed" ? "green" : "red"}}>
@@ -92,18 +92,18 @@ function Statistics({id}: {id: string}) {
                         </div>
                         
                         <div className="flex gap-1">
-                            <span>Longest completed streak:</span>
+                            <span>Longest Completed streak:</span>
                             <span>{getLongestStreak("completed")}</span>
                             <span>{getLongestStreak("completed") === 1 ? "day" : "days"}</span>
                         </div>
 
                         <div className="flex gap-1">
-                            <span>Longest untouched streak:</span>
+                            <span>Longest Untouched streak:</span>
                             <span>{getLongestStreak("untouched")}</span>
                             <span>{getLongestStreak("untouched") === 1 ? "day" : "days"}</span>
                         </div>
                         
-                        <div className="flex gap-2"><span>Days completed:</span><span>{getCompletitionPercent().toFixed()}%</span></div>
+                        <div className="flex gap-2"><span>Days with Completed:</span><span>{getCompletitionPercent().toFixed()}%</span></div>
                         <div className="flex gap-1">
                             <span>Total time spent:</span>
                             <span>{isNaN(inputsArray[0]) ? "/" : getTimeSpent()}</span>

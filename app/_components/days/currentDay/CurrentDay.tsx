@@ -19,3 +19,5 @@ export default function CurrentDay() {
         </div>
     );
 }
+
+//  min-w-[1010px]

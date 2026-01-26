@@ -129,7 +129,7 @@ function CurrentDayHeader() {
     }, [plan])
 
     return (
-        <div className="flex gap-3 p-1 rou">
+        <div className="flex gap-3 p-1">
             <p>{getDateFormat(date)}</p>
             <AddAct />
             <NoteButton planData={plan} data={note} />

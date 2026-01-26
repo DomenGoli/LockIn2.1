@@ -8,7 +8,6 @@ import {
 } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 import Button from "@/app/_ui/Button";
 import FormRow from "@/app/_ui/FormRow";
-import Comment from "@/app/_ui/Comment";
 import SubWindow from "@/app/_ui/SubWindow";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
@@ -104,7 +103,7 @@ function CreateUpdateActForm({
     return (
         <div className="flex flex-col gap-5">
             <button
-                className="bg-none w-0.1 border-0 absolute transform-[translateX-[3.8rem]] top-[1.6rem] right-[0.5rem] cursor-pointer hover:text-white"
+                className="bg-none w-0.1 border-0 absolute transform-[translateX-[3.8rem]] top-[1.6rem] right-2 cursor-pointer hover:text-white"
                 onClick={handleToggleSubWindow}
             >
                 {!subWindow ? <LuChevronRight size="1.6rem"/> : <LuChevronLeft size="1.6rem" />}
@@ -113,7 +112,8 @@ function CreateUpdateActForm({
                 <SubWindow
                     value={comment}
                     setValue={setComment}
-                    id={actToUpdate?.id || null}
+                    id={actToUpdate?.id}
+                    name={actToUpdate.name}
                 />
             )}
             <div className="flex items-center justify-center">
