@@ -1,7 +1,37 @@
 "use server"
 
 import { collection } from "@/app/db";
-import { MongoClient } from "mongodb";
+import { Document, MongoClient, WithId } from "mongodb";
+
+type ActivityType = {
+    name: string;
+    inputMode: "input" | "select";
+    target: string;
+    input: string;
+    unit: string;
+    id: string;
+    overUnder: string;
+    width: number;
+    actState: string;
+    betterPriority?: string;
+    comment?: string;
+    // curStreak: number;
+    // longestCompletedStreak: number;
+    // longestUntouchedStreak: number;
+};
+
+type LoadedDataType = {
+    date: Date;
+    actsArray: ActivityType[];
+    id: string;
+    note: string;
+    plan: string;
+    rating: string;
+    _id: string;
+    betterPoints: number
+};
+
+
 
 
 const client = new MongoClient(process.env.MONGODB_URL)
@@ -20,7 +50,7 @@ export async function getSavedDaysData() {
     // await new Promise((res) => setTimeout(res, 5000));
 
     const db = await connectToDatabase()
-    const data = []
+    const data:WithId<Document>[] = []
     if(db) {
         const cursor = db.collection(collection).find().sort({date: 1})
         for await(const doc of cursor) {

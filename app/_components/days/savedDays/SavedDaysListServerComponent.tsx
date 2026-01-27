@@ -19,16 +19,16 @@ type ActivityType = {
     // longestUntouchedStreak: number;
 };
 
-type LoadedDataType = {
-    date: Date;
-    actsArray: ActivityType[];
-    id: string;
-    note: string;
-    plan: string;
-    rating: string;
-    _id: string;
-    betterPoints: number
-};
+// type LoadedDataType = {
+//     date: Date;
+//     actsArray: ActivityType[];
+//     id: string;
+//     note: string;
+//     plan: string;
+//     rating: string;
+//     _id: string;
+//     betterPoints: number
+// };
 
 // type MapValueType = {
 //     statsArray: string[];
@@ -37,7 +37,7 @@ type LoadedDataType = {
 
 
 async function SavedDaysListServerComponent() {
-    const dbData: LoadedDataType[] | null = await getSavedDaysData()
+    const dbData = await getSavedDaysData()
     
 
     const actsStateHashMap = new Map()
@@ -45,7 +45,7 @@ async function SavedDaysListServerComponent() {
     function populateActsStateHashmap() {
         if(!dbData) return;
         for(let i = dbData.length-1; i >= 0; i--) {
-            dbData[i].actsArray.forEach(act => {
+            dbData[i].actsArray.forEach((act:ActivityType) => {
                 const id = act.id
                 const state = act.actState
                 const value = act.input
