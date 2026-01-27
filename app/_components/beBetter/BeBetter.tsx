@@ -112,7 +112,7 @@ function BeBetter() {
                     >
                         Reset
                     </button>
-                    <button onClick={handleMFA} className="border rounded-2xl w-20 cursor-pointer">MFA</button>
+                    {/* <button onClick={handleMFA} className="border rounded-2xl w-20 cursor-pointer">MFA</button> */}
                 </div>
             </div>
             <div className="flex w-full justify-center mb-5">

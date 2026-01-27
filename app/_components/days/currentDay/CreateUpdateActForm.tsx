@@ -101,19 +101,25 @@ function CreateUpdateActForm({
     }
 
     return (
-        <div className="flex flex-col gap-5">
+        <div className="grid grid-rows-[1fr_auto] h-screen">
+            <div className="flex flex-col gap-5">
+
             <button
                 className="bg-none w-0.1 border-0 absolute transform-[translateX-[3.8rem]] top-[1.6rem] right-2 cursor-pointer hover:text-white"
                 onClick={handleToggleSubWindow}
-            >
-                {!subWindow ? <LuChevronRight size="1.6rem"/> : <LuChevronLeft size="1.6rem" />}
+                >
+                {!subWindow ? (
+                    <LuChevronRight size="1.6rem" />
+                ) : (
+                    <LuChevronLeft size="1.6rem" />
+                )}
             </button>
             {subWindow && (
                 <SubWindow
-                    value={comment}
-                    setValue={setComment}
-                    id={actToUpdate?.id}
-                    name={actToUpdate.name}
+                value={comment}
+                setValue={setComment}
+                id={actToUpdate?.id}
+                name={actToUpdate.name}
                 />
             )}
             <div className="flex items-center justify-center">
@@ -128,14 +134,14 @@ function CreateUpdateActForm({
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                    />
+                        />
                 </FormRow>
 
                 <FormRow label="Vrsta">
                     <select
                         value={inputMode}
                         onChange={(e) => setInputMode(e.target.value)}
-                    >
+                        >
                         {/* <option></option> */}
                         <option className="text-black" value={"input"}>
                             Vnos
@@ -152,7 +158,7 @@ function CreateUpdateActForm({
                             <select
                                 value={overUnder}
                                 onChange={(e) => setOverUnder(e.target.value)}
-                            >
+                                >
                                 <option className={selectStyle} value="over">
                                     Vsaj
                                 </option>
@@ -168,7 +174,7 @@ function CreateUpdateActForm({
                                 value={target}
                                 onChange={(e) => setTarget(e.target.value)}
                                 className={inputStyle}
-                            />
+                                />
                         </FormRow>
 
                         <FormRow label="Enota">
@@ -177,7 +183,7 @@ function CreateUpdateActForm({
                                 onChange={(e) => setUnit(e.target.value)}
                                 type="text"
                                 className={inputStyle}
-                            />
+                                />
                         </FormRow>
                     </>
                 )}
@@ -186,7 +192,7 @@ function CreateUpdateActForm({
                     <select
                         value={betterPriority}
                         onChange={(e) => setBetterPriority(e.target.value)}
-                    >
+                        >
                         <option className={selectStyle} value="major">
                             Pomembno
                         </option>
@@ -199,8 +205,9 @@ function CreateUpdateActForm({
                     </select>
                 </FormRow>
             </div>
+            </div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-4 pb-25">
                 <Button variation="form" onClick={handleAddActivity}>
                     Shrani
                 </Button>

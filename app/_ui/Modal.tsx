@@ -79,7 +79,7 @@ function Window({
 
     return createPortal(
         <div ref={ref} className="">
-            <div role="modal-window" className="first fixed top-0 left-0 bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] transform-[translateX-[3.8rem]] shadow-lg transition-all duration-[2s] w-98.25 border-r-stone-400 border-r-2 border-b-stone-400 border-b-2">
+            <div role="modal-window" className="fixed top-0 left-0 bg-(--day) rounded-(--border-radius-lg) p-[3.2rem_1.6rem] h-screen transform-[translateX-[3.8rem]] shadow-lg transition-all duration-[2s] w-98.25 border-r-stone-400 border-r-2 bborder-b-stone-400 bborder-b-2">
                 {variation === "first" && (
                     <button
                     role="close"

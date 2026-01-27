@@ -30,7 +30,7 @@ function TileList({
 
     if (!actsArray || tileMode === "input" && actsArray?.length === 0)
         return (
-            <div className="flex">
+            <div className="flex justify-center h-10">
                 <p>Začni z dodajanjem aktivnosti.</p>
             </div>
         );

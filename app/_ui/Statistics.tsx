@@ -1,20 +1,18 @@
-"use client"
+"use client";
 
 import { useAppSelector } from "../hooks";
 
-function Statistics({id, name}: {id: string, name: string}) {
+function Statistics({ id, name }: { id: string; name: string }) {
     const { actsStateHashMap } = useAppSelector((store) => store.dayObject);
-    const { statsArray, inputsArray } = actsStateHashMap?.get(id)
-    
-    
+    const { statsArray, inputsArray } = actsStateHashMap?.get(id);
+
     function getTimeSpent(): number {
         let timeSpent = 0;
         inputsArray.forEach((input: number) => {
-            if(!isNaN(input)) timeSpent = timeSpent + Number(input)
-        })
+            if (!isNaN(input)) timeSpent = timeSpent + Number(input);
+        });
 
-
-        return timeSpent
+        return timeSpent;
     }
 
     function getLongestStreak(mode: string): number {
@@ -37,15 +35,15 @@ function Statistics({id, name}: {id: string, name: string}) {
         return maxCount;
     }
 
-    function getCompletitionPercent(){
+    function getCompletitionPercent() {
         const totalActs = statsArray.length;
         let totalCompleted = 0;
 
         for (let i = 0; i < statsArray?.length; i++) {
-            if(statsArray[i] === "completed") totalCompleted++
+            if (statsArray[i] === "completed") totalCompleted++;
         }
 
-        return totalCompleted / totalActs * 100
+        return (totalCompleted / totalActs) * 100;
     }
 
     function getCurrentStreak(): string {
@@ -81,36 +79,61 @@ function Statistics({id, name}: {id: string, name: string}) {
 
     return (
         <div className="flex flex-col gap-2">
-                        <p className="text-center">Stats for {name}</p>
-                        <div className="flex gap-1">
-                            <span>Current streak:</span>
-                            <span style={{color: getCurrentStreak() === "completed" ? "green" : "red"}}>
-                                {getStreakName(getCurrentStreak()) || "/"}
-                            </span>
-                            <span>({getCurrentStreakCount()}</span>
-                            <span>{getCurrentStreakCount() === 1 ? "day" : "days"})</span>
-                        </div>
-                        
-                        <div className="flex gap-1">
-                            <span>Longest Completed streak:</span>
-                            <span>{getLongestStreak("completed")}</span>
-                            <span>{getLongestStreak("completed") === 1 ? "day" : "days"}</span>
-                        </div>
+            <p className="text-center">Stats for {name}</p>
+            <div className="flex gap-1 justify-between">
+                <span>Current streak:</span>
+                <div>
+                    
+                    <span>{getCurrentStreakCount()}</span>
+                    <span>
+                        {getCurrentStreakCount() === 1 ? " day" : " days"} -
+                    </span>
+                    <span
+                        style={{
+                            color:
+                                getCurrentStreak() === "completed"
+                                    ? "green"
+                                    : "red",
+                        }}
+                    >
+                        {" "}{getStreakName(getCurrentStreak()) || "/"}
+                    </span>
+                </div>
+            </div>
 
-                        <div className="flex gap-1">
-                            <span>Longest Untouched streak:</span>
-                            <span>{getLongestStreak("untouched")}</span>
-                            <span>{getLongestStreak("untouched") === 1 ? "day" : "days"}</span>
-                        </div>
-                        
-                        <div className="flex gap-2"><span>Days with Completed:</span><span>{getCompletitionPercent().toFixed()}%</span></div>
-                        <div className="flex gap-1">
-                            <span>Total time spent:</span>
-                            <span>{isNaN(inputsArray[0]) ? "/" : getTimeSpent()}</span>
-                            <span>minutes</span>
-                        </div>
-                    </div>
-    )
+            <div className="flex gap-1 justify-between">
+                <span>Longest Completed streak:</span>
+                <div>
+                    <span>{getLongestStreak("completed")}</span>
+                    <span>
+                        {getLongestStreak("completed") === 1 ? " day" : " days"}
+                    </span>
+                </div>
+            </div>
+
+            <div className="flex gap-1 justify-between">
+                <span>Longest Untouched streak:</span>
+                <div>
+                    <span>{getLongestStreak("untouched")}</span>
+                    <span>
+                        {getLongestStreak("untouched") === 1 ? " day" : " days"}
+                    </span>
+                </div>
+            </div>
+
+            <div className="flex gap-2 justify-between">
+                <span>Days with Completed:</span>
+                <span>{getCompletitionPercent().toFixed()}%</span>
+            </div>
+            <div className="flex gap-1 justify-between">
+                <span>Total time spent:</span>
+                <div>
+                    <span>{isNaN(inputsArray[0]) ? "/" : getTimeSpent()}</span>
+                    <span> minutes</span>
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export default Statistics
+export default Statistics;
