@@ -1,1 +1,1 @@
-export const collection = "day"
+export const collection = "days"
