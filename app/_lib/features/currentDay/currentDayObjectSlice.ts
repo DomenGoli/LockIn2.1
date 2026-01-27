@@ -23,13 +23,24 @@ type ActivityType = {
     // longestUntouchedStreak: number;
 };
 
+// type MapType = {
+//     [key: string]: [value: MappedObjectType]
+// }
+
+// type MappedObjectType = {
+//     statsArray:string[];
+//     inputsArray: string[];
+// }
+
+// actsStateHashMap: Map<string, {statsArray:string[], inputsArray: string[]}> | undefined;
 type InitialStateType = {
     date: string;
     actsArray: ActivityType[];
     note: string;
     plan: string;
     deltaScore?: number;
-    actsStateHashMap: Map<any, any> | null;
+    actsStateHashMap: Map<string, any> | undefined;
+    isMassiveActionOpen: boolean
 };
 
 type InputsType = {
@@ -58,7 +69,8 @@ const initialState: InitialStateType = {
     actsArray: loadLocalStoredData().actsArray || [],
     note: loadLocalStoredData().note || "",
     plan: loadLocalStoredData().plan || "",
-    actsStateHashMap: null,
+    actsStateHashMap: undefined,
+    isMassiveActionOpen: loadLocalStoredData().isMassiveActionOpen || false
 };
 const dayObjectSlice = createSlice({
     name: "dayObject",
@@ -141,22 +153,16 @@ const dayObjectSlice = createSlice({
         saveActsStateHashMap(state, action) {
             state.actsStateHashMap = action.payload
         },
-        // updateStreak(state) {
-        //     state.actsArray.map(activity => {
-        //         if(activity.actState === "completed") {
-        //             if(!activity.curStreak) activity.curStreak = 1;
-        //             else activity.curStreak ++;
-        //         }
-        //         else if(activity.actState === "untouched") activity.curStreak = 0;
-        //     })
-        //     localStorage.setItem("currentDayObject", JSON.stringify({...state}))
-        // }
+        toggleMassiveAction(state) {
+            state.isMassiveActionOpen = !state.isMassiveActionOpen
+            localStorage.setItem("currentDayObject", JSON.stringify({...state}))
+        }
     },
 });
 
 
 
 export default dayObjectSlice.reducer;
-export const {saveDay, addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage, saveActsStateHashMap } =
+export const {saveDay, addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage, saveActsStateHashMap, toggleMassiveAction } =
     dayObjectSlice.actions;
 

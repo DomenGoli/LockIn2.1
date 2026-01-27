@@ -8,6 +8,7 @@ import {
 } from "@/app/_lib/features/beBetter/betterSlice";
 import { pointsConfig } from "../../_lib/features/beBetter/pointsConfig";
 import { differenceInCalendarDays } from "date-fns";
+import { toggleMassiveAction } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 
 function BeBetter() {
     const {
@@ -66,6 +67,10 @@ function BeBetter() {
         [actsArray.length, calculateMissedDays]
     );
 
+    function handleMFA() {
+        dispatch(toggleMassiveAction())
+    }
+
     useEffect(
         function () {
             const missedDaysScore = calculateMissedDaysScore();
@@ -100,13 +105,14 @@ function BeBetter() {
                     </div>
                 </div>
 
-                <div className="mt-14">
+                <div className="flex flex-col mt-14 items-center gap-5">
                     <button
                         className="border rounded-2xl w-20 cursor-pointer"
                         onClick={handleReset}
                     >
                         Reset
                     </button>
+                    <button onClick={handleMFA} className="border rounded-2xl w-20 cursor-pointer">MFA</button>
                 </div>
             </div>
             <div className="flex w-full justify-center mb-5">

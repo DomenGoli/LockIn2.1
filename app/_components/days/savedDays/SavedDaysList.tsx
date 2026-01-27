@@ -44,7 +44,9 @@ type DayObjectType = {
 
 
 
-function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateHashMap: Map}) {
+
+
+function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateHashMap: Map<string, {statsArray:string[], inputsArray: string[]}>}) {
     const days = JSON.parse(dbData)
 
     // const {

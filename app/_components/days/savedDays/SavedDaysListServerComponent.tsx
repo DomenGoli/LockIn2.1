@@ -30,6 +30,11 @@ type LoadedDataType = {
     betterPoints: number
 };
 
+// type MapValueType = {
+//     statsArray: string[];
+//     inputsArray: string[];
+// }
+
 
 async function SavedDaysListServerComponent() {
     const dbData: LoadedDataType[] | null = await getSavedDaysData()
