@@ -1,6 +1,6 @@
 "use server";
 
-import { ObjectId, WithId } from "mongodb";
+import { ObjectId } from "mongodb";
 import { connectToDatabase } from "../service/database";
 import client from "../service/db";
 // import client from "./db"
@@ -10,13 +10,13 @@ export async function getUser(username: string) {
     const cursor = db?.collection("users").findOne({ username });
     return cursor;
 }
-type UserType = {
-    _id: string;
-    name: string;
-    username: string;
-    password: string;
-    daysCollection: string;
-};
+// type UserType = {
+//     _id: string;
+//     name: string;
+//     username: string;
+//     password: string;
+//     daysCollection: string;
+// };
 export interface UserInterface {
    _id: ObjectId;
     name: string;
@@ -24,13 +24,13 @@ export interface UserInterface {
     password: string;
     daysCollection: string;
 }
-interface test extends WithId<Document> {
-    _id: ObjectId;
-    name: string;
-    username: string;
-    password: string;
-    daysCollection: string;
-}
+// interface test extends WithId<Document> {
+//     _id: ObjectId;
+//     name: string;
+//     username: string;
+//     password: string;
+//     daysCollection: string;
+// }
 
 export async function getUserByName(name: string | null | undefined): Promise<UserInterface> {
     const db = await connectToDatabase();

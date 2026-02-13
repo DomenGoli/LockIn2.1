@@ -1,10 +1,8 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { MongoDBAdapter } from "@auth/mongodb-adapter"
-import client from "./service/db";
+// import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import { authConfig } from "./auth.config";
 import { getUserByUsernameVerSec } from "./actions/userDataActions";
-// import { getUserByUsernameVerSec } from "./service/user";
 
 export const {handlers, signIn, signOut, auth} = NextAuth({
     // adapter: MongoDBAdapter(client),

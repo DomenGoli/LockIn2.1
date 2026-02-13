@@ -3,7 +3,6 @@ import { getSavedDaysData } from "@/app/_lib/actions/dataActions";
 import SavedDaysList from "./SavedDaysList";
 import { auth } from "@/app/_lib/auth";
 import { getUserByName } from "@/app/_lib/actions/userDataActions";
-import { WithId } from "mongodb";
 
 type ActivityType = {
     name: string;
@@ -37,14 +36,14 @@ type ActivityType = {
 //     statsArray: string[];
 //     inputsArray: string[];
 // }
-type UserDocument = WithId<UserType>
-type UserType = {
-    _id: string;
-    name: string;
-    username: string;
-    password: string;
-    daysCollection: string;
-};
+// type UserDocument = WithId<UserType>
+// type UserType = {
+//     _id: string;
+//     name: string;
+//     username: string;
+//     password: string;
+//     daysCollection: string;
+// };
 
 async function SavedDaysListServerComponent() {
     const session = await auth();
