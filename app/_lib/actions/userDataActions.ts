@@ -24,6 +24,11 @@ export interface UserInterface {
     password: string;
     daysCollection: string;
 }
+
+export interface UserInterface2 {
+    name: string;
+    password: string;
+}
 // interface test extends WithId<Document> {
 //     _id: ObjectId;
 //     name: string;
@@ -40,11 +45,12 @@ export async function getUserByName(name: string | null | undefined): Promise<Us
     else return new Promise((req,res) => {})
 }
 // Promise<UserType>
-export async function getUserByUsernameVerSec(username: string | unknown) {
+export async function getUserByUsernameVerSec(username: string | unknown):Promise<UserInterface2 | null> {
     await client.connect();
     const cursor = client.db("lockin").collection("users");
-    const user = cursor.findOne({ username });
-    return user;
+    const user = cursor.findOne<UserInterface2>({ username });
+    if(user) return user;
+    else return new Promise((req,res) => {})
 
     // try {
     //     const db = await connectToDatabase()
