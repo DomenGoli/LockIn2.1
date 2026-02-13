@@ -7,7 +7,7 @@ import { getUserByUsernameVerSec } from "./actions/userDataActions";
 // import { getUserByUsernameVerSec } from "./service/user";
 
 export const {handlers, signIn, signOut, auth} = NextAuth({
-    adapter: MongoDBAdapter(client),
+    // adapter: MongoDBAdapter(client),
     session: {strategy: "jwt"},
     ...authConfig,
     providers: [
