@@ -9,8 +9,14 @@ export async function getUser(username: string) {
     const cursor = db?.collection("users").findOne({ username });
     return cursor;
 }
-
-export async function getUserByName(name: string | null | undefined) {
+type UserType = {
+    _id: string;
+    name: string;
+    username: string;
+    password: string;
+    daysCollection: string;
+};
+export async function getUserByName(name: string | null | undefined): Promise<UserType> {
     const db = await connectToDatabase();
     const cursor = db?.collection("users").findOne({ name });
     return cursor;

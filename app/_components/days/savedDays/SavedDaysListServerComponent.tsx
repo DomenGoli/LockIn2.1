@@ -40,6 +40,7 @@ type ActivityType = {
 async function SavedDaysListServerComponent() {
     const session = await auth();
     const { daysCollection } = await getUserByName(session?.user?.name);
+    // console.log("find:", await getUserByName(session?.user?.name));
     // console.log(user);
     // console.log(session);
     // const test = session?.user?.daysCollection
