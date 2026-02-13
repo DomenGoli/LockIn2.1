@@ -5,8 +5,20 @@ import Sidebar from "@/app/_ui/Sidebar";
 import { Suspense } from "react";
 import Spinner from "@/app/_ui/Spinner";
 import SavedDaysListServerComponent from "@/app/_components/days/savedDays/SavedDaysListServerComponent";
+import { auth } from "./_lib/auth";
+import Logout from "./_ui/Logout";
 
-function Page() {
+
+export const metadata = {
+    title: "LockIn"
+}
+
+async function Page() {
+    // const session = await auth()
+
+    // if(!session) return null
+
+
     return (
         <div className="flex justify-center">
             <div className="grid grid-cols-[auto_22rem]">
@@ -41,7 +53,8 @@ function Page() {
                     </div>
                 </div>
 
-                <div className="bg-(--day) mt-5 mr-5 mb-5">
+                <div className="flex flex-col mt-5 mr-5 mb-5 gap-3">
+                    <Logout />
                     <Sidebar />
                 </div>
                 </StoreProvider>

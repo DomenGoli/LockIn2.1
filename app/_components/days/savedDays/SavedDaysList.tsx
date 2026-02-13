@@ -1,11 +1,13 @@
 "use client"
 import SavedDay from "./SavedDay";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import TileList from "../TileList";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { saveLastDay } from "@/app/_lib/features/beBetter/betterSlice";
 import { saveActsStateHashMap } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 import SavedDayHeader from "./SavedDayHeader";
+import { saveBetterScore } from "@/app/_lib/features/beBetter/resetBetterSlice";
+import { setDaysCollection } from "@/app/_lib/features/user/userSlice";
 
 // type DayActivities = {
 //     name: string;
@@ -46,7 +48,7 @@ type DayObjectType = {
 
 
 
-function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateHashMap: Map<string, {statsArray:string[], inputsArray: string[]}>}) {
+function SavedDaysList({ dbData, actsStateHashMap, daysCollection }: {daysCollection:string, dbData: string, actsStateHashMap: Map<string, {statsArray:string[], inputsArray: string[]}>}) {
     const days = JSON.parse(dbData)
 
     // const {
@@ -69,6 +71,7 @@ function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateH
 
     // za filtriranje prikazovanja actov, sinhronizirano z inputDay
     const { actsArray } = useAppSelector((store) => store.dayObject);
+    const {resetDate} = useAppSelector((store) => store.resetBetter)
     let existingActsIds: string[];
     if (actsArray) {
         existingActsIds = actsArray.map((act) => act.id);
@@ -115,17 +118,38 @@ function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateH
     //     });
     // }
 
+    const calculateBetterScore = useCallback(
+        function calculateBetterScore():number {
+            if(!dbData) return 0;
+            
+            let betterScore = 0;
+            
+            for(let i=0; i<days.length; i++) {
+                if(days[i].date > resetDate) {
+                    if(days[i].betterPoints) betterScore = betterScore + days[i].betterPoints
+                }
+            };
+            return betterScore;
+        },[days, dbData, resetDate]
+    )
+
     useEffect(function() {
         if(!dbData) return;
         if(dbData && days?.length === 0) return;
+
+        dispatch(setDaysCollection(daysCollection))
+        
+        const betterScore = calculateBetterScore()
+        
         if(days && days?.length > 0) {
             dispatch(saveLastDay(days.at(-1)))
             dispatch(saveActsStateHashMap(actsStateHashMap))
+            dispatch(saveBetterScore(betterScore))
             console.log(`Last date from DB: ${new Date(days.at(-1).date)}`);
             console.log(actsStateHashMap);
         }
         
-    }, [dbData, days, dispatch, actsStateHashMap])
+    }, [actsStateHashMap, days, dbData, dispatch, calculateBetterScore, daysCollection])
 
     
 
@@ -136,7 +160,7 @@ function SavedDaysList({ dbData, actsStateHashMap }: {dbData: string, actsStateH
     if (!dbData || days?.length === 0)
         return (
             <div className="flex items-center justify-center">
-                Ni shranjenih dni. CC
+                Ni shranjenih dni. 
             </div>
         );
 

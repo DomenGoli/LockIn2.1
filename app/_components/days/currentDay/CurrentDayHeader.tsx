@@ -2,7 +2,6 @@
 
 import Button from "@/app/_ui/Button";
 import toast from "react-hot-toast";
-import { getDateFormat } from "@/app/_lib/helpers";
 import { FormEvent, useEffect, useState } from "react";
 import StarRating from "../../../_ui/StarRating";
 import AddAct from "./AddAct";
@@ -14,20 +13,24 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { pointsConfig } from "@/app/_lib/features/beBetter/pointsConfig";
 import { saveDay } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 import { closeDiary } from "@/app/_lib/features/diary/diarySlice";
-import { saveDayToDatabaseAction } from "@/app/_lib/service/actions";
-import { differenceInCalendarDays } from "date-fns";
+import { saveDayToDatabaseAction } from "@/app/_lib/actions/dataActions";
+import { differenceInCalendarDays, isToday } from "date-fns";
 import { updateBetterScore } from "@/app/_lib/features/beBetter/betterSlice";
+import ChangeDate from "./ChangeDate";
+// import { saveDayToDatabaseAction } from "@/app/_lib/service/actions copy";
 
 // const today = new Date();
 
 function CurrentDayHeader() {
     const dispatch = useAppDispatch();
     const { actsArray, note, plan } = useAppSelector(
-        (store) => store.dayObject
+        (store) => store.dayObject,
     );
-    const [date] = useState(new Date().getTime());
+    // const [date, setDate] = useState<Date | number>(new Date().getTime());
+    const [date, setDate] = useState<Date>(new Date());
     const [rating, setRating] = useState(0);
     const { lastDay } = useAppSelector((store) => store.better);
+    const { daysCollection } = useAppSelector((store) => store.user);
 
     // const queryClient = useQueryClient();
     // const { mutate, isPending: uploading } = useMutation({
@@ -42,25 +45,33 @@ function CurrentDayHeader() {
     // });
     const [rerenderRating, forceRerenderRating] = useState(Math.random);
 
-    function handleSavingDay(e:FormEvent<HTMLFormElement>) {
+    function getDate(): number{
+        if(isToday(date)) return new Date().getTime()
+        return new Date(date).getTime()
+    }
+
+    function handleSavingDay(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!rating) {
-            toast("Oceni svoj dan!", { icon: "⭐⭐⭐" });
+            toast("Oceni svoj dan!", {
+                icon: "⭐⭐⭐",
+                position: "bottom-center",
+            });
             return;
         }
         const betterPoints = calculateBetterEveryDayScore();
         dispatch(updateBetterScore(betterPoints));
         // mutate({date, actsArray, rating, note, plan, betterPoints}) // za reactQuery
         try {
-            saveDayToDatabaseAction({
-                date,
+            saveDayToDatabaseAction(daysCollection, {
+                date: getDate(), 
                 actsArray,
                 rating,
                 note,
                 plan,
                 betterPoints,
             });
-            toast.success("Dan je bil uspesno shranjen!")
+            toast.success("Dan je bil uspesno shranjen!");
         } catch (err) {
             console.log(err);
         }
@@ -72,14 +83,12 @@ function CurrentDayHeader() {
         forceRerenderRating(Math.random());
     }
 
-    
-
     function calculateBetterEveryDayScore(): number {
         let points = 0;
         actsArray.forEach((act) => {
             let curScore = 0;
             const lastDayActivity = lastDay.actsArray?.filter(
-                (lastAct) => lastAct.name === act.name
+                (lastAct) => lastAct.name === act.name,
             )[0];
 
             if (act.betterPriority === "none") curScore = 0;
@@ -105,7 +114,7 @@ function CurrentDayHeader() {
 
                 const daysAgoSavedDay = differenceInCalendarDays(
                     new Date(),
-                    new Date(lastDay.date)
+                    new Date(lastDay.date),
                 );
                 if (daysAgoSavedDay <= 1) {
                     // const lastDayActivity = lastDay.actsArray?.filter(lastAct => lastAct.name === act.name)[0]
@@ -123,14 +132,17 @@ function CurrentDayHeader() {
         return points;
     }
 
-
-    useEffect(function() {
-        if(!plan) toast("Napiši današnji plan v beležko!", {icon: "🦁"})
-    }, [plan])
+    useEffect(
+        function () {
+            if (!plan) toast("Napiši današnji plan v beležko!", { icon: "🦁" });
+        },
+        [plan],
+    );
 
     return (
         <div className="flex gap-3 p-1">
-            <p>{getDateFormat(date)}</p>
+            <ChangeDate date={date} setDate={setDate} />
+            {/* <p>{getDateFormat(date)}</p> */}
             <AddAct />
             <NoteButton planData={plan} data={note} />
             {/* <Form onSubmit={(e) => handleSavingDay(e)}>

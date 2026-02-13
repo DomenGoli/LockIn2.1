@@ -156,13 +156,21 @@ const dayObjectSlice = createSlice({
         toggleMassiveAction(state) {
             state.isMassiveActionOpen = !state.isMassiveActionOpen
             localStorage.setItem("currentDayObject", JSON.stringify({...state}))
-        }
+        },
+        showMassiveAction(state) {
+            state.isMassiveActionOpen = true
+            localStorage.setItem("currentDayObject", JSON.stringify({...state}))
+        },
+        hideMassiveAction(state) {
+            state.isMassiveActionOpen = false
+            localStorage.setItem("currentDayObject", JSON.stringify({...state}))
+        },
     },
 });
 
 
 
 export default dayObjectSlice.reducer;
-export const {saveDay, addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage, saveActsStateHashMap, toggleMassiveAction } =
+export const {saveDay, addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage, saveActsStateHashMap, toggleMassiveAction, showMassiveAction, hideMassiveAction } =
     dayObjectSlice.actions;
 

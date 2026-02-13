@@ -1,88 +1,166 @@
-"use client"
+"use client";
 import { useCallback, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
-    resetScore,
-    saveLastDateReference,
+    saveLastDailyCheckTime,
     updateBetterScore,
 } from "@/app/_lib/features/beBetter/betterSlice";
 import { pointsConfig } from "../../_lib/features/beBetter/pointsConfig";
-import { differenceInCalendarDays } from "date-fns";
-import { toggleMassiveAction } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
+import { differenceInCalendarDays, sub } from "date-fns";
+import {
+    hideMassiveAction,
+    saveDay,
+    showMassiveAction,
+    toggleMassiveAction,
+} from "@/app/_lib/features/currentDay/currentDayObjectSlice";
+import toast from "react-hot-toast";
+import {
+    saveMultipleDaysToDatabaseAction,
+} from "@/app/_lib/actions/dataActions";
+import { resetScore } from "@/app/_lib/features/beBetter/resetBetterSlice";
+// import { saveMultipleDaysToDatabaseAction } from "@/app/_lib/service/actions copy";
 
 function BeBetter() {
     const {
-        betterScore,
+        // betterScore,
         deltaScore,
         lastDay: { date: lastSavedDayDate },
-        lastDayChecked,
+        lastDailyCheck,
     } = useAppSelector((store) => store.better);
+    const { betterScoreNew } = useAppSelector((store) => store.resetBetter);
     const { actsArray } = useAppSelector((store) => store.dayObject);
     const { isNoteOpen } = useAppSelector((store) => store.diary);
+    const { daysCollection } = useAppSelector((store) => store.user);
     const dispatch = useAppDispatch();
 
     const todayRef = useRef(new Date());
 
+    const isDailyCheckDone = useCallback(
+        function isDailyCheckDone(): boolean {
+            return (
+                todayRef.current.setHours(0, 0, 0, 0) ===
+                lastDailyCheck.setHours(0, 0, 0, 0)
+            );
+        },
+        [lastDailyCheck],
+    );
+
     function handleReset() {
-        dispatch(resetScore());
+        dispatch(resetScore(new Date().getTime()));
+    }
+
+    function handleMFA() {
+        dispatch(toggleMassiveAction());
     }
     // console.log(`today: ${todayRef.current.setHours(0, 0, 0, 0)}`);
 
     const calculateMissedDays = useCallback(
         function calculateMissedDays(): number | null {
-            // console.log(
-            //     `test: ${new Date()} ${differenceInCalendarDays(
-            //         new Date().setHours(0, 0, 0, 0),
-            //         new Date(2026, 0, 2).setHours(0, 0, 0, 0)
-            //     )}`
-            // );
             // ce je danes ze checkiru razliko med datumih, takoj returna 0
             console.log(`lastsaveddate: ${new Date(lastSavedDayDate)}`);
-            console.log(`lastdatechecked: ${new Date(lastDayChecked)}` );
+            console.log(`lastdatechecked: ${new Date(lastDailyCheck)}`);
 
             // Guard clause zaradi asynch fetchanja zadnjega dneva iz database
-            if (!lastSavedDayDate) return null; 
+            if (!lastSavedDayDate) return null;
 
-            // checkira ce je danse ze preveril missed days
-            if (
-                todayRef.current.setHours(0, 0, 0, 0) ===
-                lastDayChecked.setHours(0, 0, 0, 0)
-            )
-                return null;
+            // checkira ce je danes ze preveril missed days
+            if (isDailyCheckDone()) return null;
 
             const missedDays =
-                differenceInCalendarDays(todayRef.current, lastSavedDayDate) - 1;
+                differenceInCalendarDays(todayRef.current, lastSavedDayDate) -
+                1;
             console.log(`Missed days: ${missedDays}`);
+
+            // oznaci da je bil danes ze opravljen Daily Check
+            dispatch(saveLastDailyCheckTime(todayRef.current));
+
+            // if(missedDays) {
+            //     toast(`Izpustili ste ${missedDays} ${missedDays>1 ? "dni" : "dan"}`)
+
+            //     const today = new Date()
+            //     const day= today.getDate()
+            //     const month = today.getMonth()
+            //     const year= today.getFullYear()
+
+            //     for(let i=missedDays; i=0; i--) {
+            //         const date = new Date(`${year}, ${month}, ${day-i}`)
+            //         saveDayToDatabaseAction({
+            //                         date,
+            //                         actsArray,
+            //                         rating: 0,
+            //                         note: "Izpuscen dan",
+            //                         plan: "",
+            //                         betterPoints,
+            //                     })
+            //     }
+
+            // }
+
             return missedDays;
         },
-        [lastDayChecked, lastSavedDayDate]
+        [dispatch, lastDailyCheck, lastSavedDayDate, isDailyCheckDone],
     );
 
     const calculateMissedDaysScore = useCallback(
         function calculateMissedDaysScore(): number {
             const missedDays = calculateMissedDays();
+
             if (!missedDays) return 0;
-            return missedDays * actsArray.length * pointsConfig.UNTOUCHED_MAJOR;
+
+            toast(
+                `Izpustili ste ${missedDays} ${missedDays > 1 ? "dni" : "dan"}`,
+                { duration: 5000 },
+            );
+            const points =
+                missedDays * actsArray.length * pointsConfig.UNTOUCHED_MAJOR;
+
+            // Doda izpuscene dneve v day listo
+            const daysToSave = [];
+            for (let i = missedDays; i > 0; i--) {
+                const newDay = {
+                    date: sub(new Date(), { days: i }).getTime(),
+                    actsArray,
+                    rating: 0,
+                    note: "Izpuscen dan",
+                    plan: "",
+                    betterPoints: points / missedDays,
+                };
+                daysToSave.push(newDay);
+            }
+            try {
+                saveMultipleDaysToDatabaseAction(daysCollection, daysToSave);
+            } catch (err) {
+                console.log(err);
+            }
+            dispatch(saveDay()); // resetira cached inpute v localStoragu
+            return points;
         },
-        [actsArray.length, calculateMissedDays]
+        [calculateMissedDays, actsArray, dispatch, daysCollection],
     );
 
-    function handleMFA() {
-        dispatch(toggleMassiveAction())
-    }
+    // logika za Massive Fucking Action day. 30% moznost da je "on"
+    useEffect(
+        function () {
+            if (!isDailyCheckDone()) {
+                dispatch(hideMassiveAction());
+                const random = Math.random();
+                if (random < 0.3) dispatch(showMassiveAction());
+            }
+        },
+        [dispatch, lastDailyCheck, isDailyCheckDone],
+    );
 
+    // preveri ce smo izpustili dan in zracuna penale
     useEffect(
         function () {
             const missedDaysScore = calculateMissedDaysScore();
-            if (missedDaysScore)
-                dispatch(saveLastDateReference(todayRef.current));
+            // if (missedDaysScore) dispatch(saveLastDailyCheckTime(todayRef.current));
 
             dispatch(updateBetterScore(missedDaysScore));
         },
-        [dispatch, calculateMissedDaysScore]
+        [dispatch, calculateMissedDaysScore],
     );
 
-    
     if (isNoteOpen) return null;
 
     return (
@@ -92,7 +170,7 @@ function BeBetter() {
                 <div>
                     <p>Score</p>
                     <div className="flex flex-row justify-center gap-1 text-3xl">
-                        {betterScore?.toFixed(1)}%
+                        {betterScoreNew?.toFixed(1)}%
                         {deltaScore != 0 && (
                             <p
                                 style={{
@@ -112,13 +190,18 @@ function BeBetter() {
                     >
                         Reset
                     </button>
-                    {/* <button onClick={handleMFA} className="border rounded-2xl w-20 cursor-pointer">MFA</button> */}
+                    <button
+                        onClick={handleMFA}
+                        className="border rounded-2xl w-20 cursor-pointer"
+                    >
+                        MFA
+                    </button>
                 </div>
             </div>
             <div className="flex w-full justify-center mb-5">
                 <p className="text-center">
-                    It&apos;s how you feel about yourself<br></br> when you are by
-                    yourself
+                    It&apos;s how you feel about yourself<br></br> when you are
+                    by yourself
                 </p>
             </div>
         </div>

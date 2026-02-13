@@ -6,7 +6,9 @@ type InitialStateType = {
     betterScore: number;
     deltaScore: number;
     lastDay: DayObjectType;
-    lastDayChecked: Date 
+    lastDailyCheck: Date;
+    betterScoreSC: number;
+    // resetDate: Date 
 };
 
 type DayObjectType = {
@@ -34,15 +36,15 @@ type ActivityType = {
 function loadLocalStoredData() {
     if(typeof window !== "undefined") {
 
-        const storedScoreValue = localStorage.getItem("betterScore");
-        return storedScoreValue ? JSON.parse(storedScoreValue) : 10;
+        const storedScoreValue = localStorage.getItem("resetDate");
+        return storedScoreValue ? JSON.parse(storedScoreValue) : "1970, 0, 1";
     }
-    else return 10
+    else return "1970, 0, 1"
 }
-function loadDateReference() {
+function loadLastDailyCheckFromLocalStorage() {
     if(typeof window !== "undefined") {
 
-        const storedDateReference = localStorage?.getItem("lastDayChecked")
+        const storedDateReference = localStorage?.getItem("lastDailyCheck")
         return storedDateReference ? JSON.parse(storedDateReference) : ""
     }
     else return ""
@@ -52,6 +54,7 @@ function loadDateReference() {
 //Initial State
 const initialState: InitialStateType = {
     betterScore: loadLocalStoredData(),
+    betterScoreSC: 0,
     deltaScore: 0,
     lastDay: {
         date: "",
@@ -61,7 +64,8 @@ const initialState: InitialStateType = {
         plan: "",
         rating: "",
     },
-    lastDayChecked: new Date(loadDateReference())
+    lastDailyCheck: new Date(loadLastDailyCheckFromLocalStorage()),
+    // resetDate: loadLocalStoredData()
 };
 
 //Reducer
@@ -78,19 +82,23 @@ const betterSlice = createSlice({
         saveLastDay(state, action) {
             state.lastDay = action.payload;
         },
-        resetScore(state){
-            state.betterScore = 10
-            state.deltaScore = 0
-            localStorage.setItem("betterScore", JSON.stringify(10))
+        // resetScore(state, action){
+        //     state.betterScoreSC = 10
+        //     state.deltaScore = 0
+        //     state.resetDate = action.payload
+        //     localStorage.setItem("resetDate", JSON.stringify(action.payload))
+        // },
+        saveLastDailyCheckTime(state, action){
+            state.lastDailyCheck = action.payload
+            localStorage.setItem("lastDailyCheck", JSON.stringify(action.payload))
         },
-        saveLastDateReference(state, action){
-            state.lastDayChecked = action.payload
-            localStorage.setItem("lastDayChecked", JSON.stringify(action.payload))
-        }
+        // saveBetterScore(state, action) {
+        //     state.betterScoreSC = action.payload
+        // }
     },
 });
 
 //Exports
 export default betterSlice.reducer;
-export const { updateBetterScore, saveLastDay, resetScore, saveLastDateReference } =
+export const { updateBetterScore, saveLastDay, saveLastDailyCheckTime } =
     betterSlice.actions;

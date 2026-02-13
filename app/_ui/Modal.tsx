@@ -98,7 +98,7 @@ function Window({
                         <LuChevronLeft size="1.6rem" />
                     </button>
                 )}
-                <div>
+                <div className="flex justify-center">
                     {cloneElement(
                         children as React.ReactElement<{
                             onCloseModal: () => void;

@@ -10,6 +10,7 @@ import Button from "@/app/_ui/Button";
 import FormRow from "@/app/_ui/FormRow";
 import SubWindow from "@/app/_ui/SubWindow";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import toast from "react-hot-toast";
 
 const inputStyle =
     "border-solid border-[1px] border-[var(--color-grey-300)] bg-[var(--color-grey-0)] p-[0.2rem_0.2rem] text-black";
@@ -55,8 +56,14 @@ function CreateUpdateActForm({
     }
 
     function handleAddActivity() {
-        if (!name || !inputMode) return;
-        if (inputMode === "input" && !target) return;
+        if (!name || !inputMode) {
+            toast("Vnesi ime aktivnosti!", {position: "top-center"})
+            return;
+        }
+        if (inputMode === "input" && !target) {
+            toast("Vnesi Cilj!", {position: "top-center"})
+            return
+        }
 
         if (isUpdateSession) {
             dispatch(
@@ -197,7 +204,7 @@ function CreateUpdateActForm({
                             Pomembno
                         </option>
                         <option className={selectStyle} value="minor">
-                            Minor
+                            Normalno
                         </option>
                         <option className={selectStyle} value="none">
                             Ignoriraj

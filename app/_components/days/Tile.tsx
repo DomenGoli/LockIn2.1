@@ -1,9 +1,6 @@
-"use client"
+"use client";
 import { useEffect, useRef, useState } from "react";
-import {
-    saveInputLocalStorage
-    
-} from "@/app/_lib/features/currentDay/currentDayObjectSlice";
+import { saveInputLocalStorage } from "@/app/_lib/features/currentDay/currentDayObjectSlice";
 import { useAppDispatch } from "../../hooks";
 import UpdateAct from "./currentDay/UpdateAct";
 // import icons from "../../ui/icons";
@@ -26,46 +23,40 @@ type TilePropsType = {
     act: DayObjectType;
 };
 
-export default function Tile({
-    tileMode,
-    act,
-}: 
-TilePropsType) {
+export default function Tile({ tileMode, act }: TilePropsType) {
     const dispatch = useAppDispatch();
     const [input, setInput] = useState(() => act.input);
     const [width, setWidth] = useState(0);
 
     const ref = useRef<HTMLDivElement | null>(null);
-    
+
     useEffect(function () {
         setWidth(ref.current ? ref.current.offsetWidth : 0);
     }, []);
 
-
-
-    //// Za stale state ob savingDay()
+    // Za stale state ob savingDay()
     useEffect(
         function () {
             setInput(act.input);
         },
-        [act]
+        [act],
     );
 
     function handleSavingInput(): void {
-        const actState = getActState()
+        const actState = getActState();
         dispatch(saveInputLocalStorage(act.name, input, width, actState));
     }
 
     function handleSavingSelect(e: string): void {
         setInput(e);
-        const actState = getActState(e)
+        const actState = getActState(e);
         dispatch(saveInputLocalStorage(act.name, e, width, actState));
     }
 
     function getActState(selectedInput?: string) {
         switch (act.inputMode) {
             case "select":
-                return selectedInput === "Da" ? "completed" : "untouched" ;
+                return selectedInput === "Da" ? "completed" : "untouched";
             case "input":
                 if (input === "0" || !input) return "untouched";
                 if (act.overUnder === "over")
@@ -79,13 +70,14 @@ TilePropsType) {
         }
     }
 
-
-
     function getTileColor() {
-        switch(getActState(input)) {
-            case "completed": return "bg-[var(--green)]"
-            case "attempted": return "bg-[var(--red)]"
-            default: return "bg-[var(--red)]"
+        switch (getActState(input)) {
+            case "completed":
+                return "bg-[var(--green)]";
+            case "attempted":
+                return "bg-[var(--red)]";
+            default:
+                return "bg-[var(--red)]";
         }
     }
 
@@ -105,14 +97,14 @@ TilePropsType) {
                     <p className="flex justify-center w-full">{act.name}</p>
                 )}
 
-                {tileMode !== "display" && (
-                    <UpdateAct actToUpdate={act} />
-                )}
+                {tileMode !== "display" && <UpdateAct actToUpdate={act} />}
             </div>
 
             <div className="flex gap-1 justify-center">
                 {/* ////////////////  Presentational */}
-                {tileMode === "display" && <span className="">{act.input}</span>}
+                {tileMode === "display" && (
+                    <span className="">{act.input}</span>
+                )}
 
                 {/* ////////////////  Statefull za Input day */}
                 {tileMode === "input" && act.inputMode === "input" && (
@@ -124,10 +116,10 @@ TilePropsType) {
                             onBlur={handleSavingInput}
                             className="pl-0.5 bg-(--ozadje) w-15 hover:border-(--ER-text) border-black border text-(--ER-text)"
                             placeholder="0"
-                            onFocus={e => {
-                                e.target.value = e.target.value === "0" ? "" : input
-                                }
-                            }
+                            onFocus={(e) => {
+                                e.target.value =
+                                    e.target.value === "0" ? "" : input;
+                            }}
                         />
                     </span>
                 )}

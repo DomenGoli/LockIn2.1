@@ -8,19 +8,26 @@
 // TODO refactor modal toggle (skrajsaj logiko z ||)
 // TODO dodaj toast za uspesen update act
 // TODO dodaj inputs type checking
-// TODO dodaj funkcijo: act comments (rabim dodat novo okno zaradi prostora)
 // TODO dodaj potrditev za reset Better scora
 // TODO popravi toaste za dodajanje in brisanje dnevov. prej so bili vezani na reactQuery
-// TODO ce je missed day, zbrisi temp data za current day, ker ostane od zadnjic
-// TODO naredi gumb za komment kot toggle
-// TODO ENV LOCAL!!!!
-// TODO 
-// TODO 
-// TODO 
+// TODO aktivnosti za current day naj se shranijo na server
+// TODO ustvari komponento ki skrbi za daily checkup
+// TODO preimenuj dbData v RSC
+// TODO login page
 // TODO 
 
 
 // DONE
+// TODO dodaj funkcijo: act comments (rabim dodat novo okno zaradi prostora)
+// TODO better score sestevaj preko savedDayHeaderjev dinamicno
+// TODO ce je missed day, zbrisi temp data za current day, ker ostane od zadnjic
+// TODO dodaj moznost shranjevanja dni za nazaj
+// TODO vstavi izpuscene dni v day listo
+// TODO naredi pupup ki pove koliko dni si spustil
+// TODO ko shranim dan, narobe zracuna missed days
+// TODO vedno naj shrani lastDayCheck in tudi preimenuj v lastTimeChecked
+// TODO naredi gumb za komment kot toggle
+// TODO ENV LOCAL!!!!
 // TODO naredi prompt za plan, ce se ni
 // TODO input field dodaj placeholderje, ko kliknes input lahko takoj pises brez brisanja 0
 // TODO popravi funkicjo za chekiranje missed days

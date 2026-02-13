@@ -2,11 +2,12 @@ import BeBetter from "../_components/beBetter/BeBetter";
 import Note from "../_components/diary/Note";
 import Plan from "../_components/diary/Plan";
 import StopWatch from "../_components/timer/StopWatch";
+// import Logout from "./Logout";
 
 function Sidebar() {
-
+    
     return (
-        <div className="grid h-full grid-rows-[11rem_1fr_auto]">
+        <div className="grid h-full grid-rows-[11rem_1fr_auto] bg-(--day)">
             <div>
                 <StopWatch mode="timer" />
             </div>

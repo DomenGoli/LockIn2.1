@@ -14,3 +14,8 @@ export function getShortDateFormat(date: Date | number | undefined) {
             year: "numeric"
         }).format(date);
     }
+
+
+// export function isDailyCheckDone2(date1: Date | string | number, date2: Date | string | number):boolean {
+//     return date1 === date2
+// }
