@@ -1,5 +1,6 @@
 "use server";
 
+import { ObjectId, WithId } from "mongodb";
 import { connectToDatabase } from "../service/database";
 import client from "../service/db";
 // import client from "./db"
@@ -16,12 +17,29 @@ type UserType = {
     password: string;
     daysCollection: string;
 };
-export async function getUserByName(name: string | null | undefined): Promise<UserType> {
-    const db = await connectToDatabase();
-    const cursor = db?.collection("users").findOne({ name });
-    return cursor;
+export interface UserInterface {
+   _id: ObjectId;
+    name: string;
+    username: string;
+    password: string;
+    daysCollection: string;
+}
+interface test extends WithId<Document> {
+    _id: ObjectId;
+    name: string;
+    username: string;
+    password: string;
+    daysCollection: string;
 }
 
+export async function getUserByName(name: string | null | undefined): Promise<UserInterface> {
+    const db = await connectToDatabase();
+    const cursor = await db?.collection("users").findOne<UserInterface>({ name });
+    console.log("cursor:", cursor);
+    if(cursor) return  cursor;
+    else return new Promise((req,res) => {})
+}
+// Promise<UserType>
 export async function getUserByUsernameVerSec(username: string | unknown) {
     await client.connect();
     const cursor = client.db("lockin").collection("users");
