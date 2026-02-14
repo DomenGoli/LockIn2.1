@@ -6,7 +6,7 @@ import { signIn, signOut } from "../auth";
 export async function login(credentials: FormData | Map<string, string>) {
     const username = credentials.get("username");
     const password = credentials.get("password");
-    console.log(username, password);
+    console.log("login triggered",username, password);
 
     await signIn("credentials", {
         username,
