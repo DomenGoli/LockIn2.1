@@ -99,6 +99,7 @@ export default function Tile({ tileMode, act }: TilePropsType) {
 
                 {tileMode !== "display" && <UpdateAct actToUpdate={act} />}
             </div>
+            
 
             <div className="flex gap-1 justify-center">
                 {/* ////////////////  Presentational */}
