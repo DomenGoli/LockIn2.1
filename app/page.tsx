@@ -5,7 +5,7 @@ import Sidebar from "@/app/_ui/Sidebar";
 import { Suspense } from "react";
 import Spinner from "@/app/_ui/Spinner";
 import SavedDaysListServerComponent from "@/app/_components/days/savedDays/SavedDaysListServerComponent";
-import { auth } from "./_lib/auth";
+// import { auth } from "./_lib/auth";
 import Logout from "./_ui/Logout";
 
 

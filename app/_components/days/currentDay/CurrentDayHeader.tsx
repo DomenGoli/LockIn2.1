@@ -43,7 +43,7 @@ function CurrentDayHeader() {
     //     },
     //     onError: (err) => toast.error(err.message)
     // });
-    const [rerenderRating, forceRerenderRating] = useState(Math.random);
+    const [rerenderRating] = useState(Math.random);
 
     function getDate(): number{
         if(isToday(date)) return new Date().getTime()
@@ -80,7 +80,7 @@ function CurrentDayHeader() {
         dispatch(saveDay());
         dispatch(closeDiary());
         setRating(0);
-        forceRerenderRating(Math.random());
+        // forceRerenderRating(Math.random());
     }
 
     function calculateBetterEveryDayScore(): number {
