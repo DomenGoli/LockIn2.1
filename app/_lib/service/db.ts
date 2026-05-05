@@ -1,10 +1,10 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-if (!process.env.MONGODB_URL) {
+if (!process.env.NEXT_PUBLIC_MONGODB_URL) {
     throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
 }
 
-const uri = process.env.MONGODB_URL;
+const uri = process.env.NEXT_PUBLIC_MONGODB_URL;
 const options = {
     serverApi: {
         version: ServerApiVersion.v1,
