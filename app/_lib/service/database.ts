@@ -34,7 +34,7 @@ import { MongoClient } from "mongodb";
 
 
 
-const client = new MongoClient(process.env.MONGODB_URL)
+const client = new MongoClient(process.env.NEXT_PUBLIC_MONGODB_URL)
 
 export async function connectToDatabase(){
     try {
